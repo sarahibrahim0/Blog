@@ -1,9 +1,12 @@
+import { posts } from '../../dummyData';
 import PostItem from './PostItem';
 import './Posts.css'
 const PostList = (props) => {
+    console.log(props.posts)
     return (
         <div className="post-list">
-            {props.posts.map(post=> <PostItem post={post} key={post._id}/>)}
+
+            {posts && props.posts.map(post=> <PostItem post={post} key={post._id}/>)}
          </div>
      );
 }

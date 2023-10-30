@@ -1,17 +1,18 @@
 import { Link } from "react-router-dom";
 import  './Posts.css';
 const PostItem = (props) => {
+    const profileLink = props?.userId ? `/profile/${props.userId}`: `/profile/${props.post?.user._id}`
   return (
     <div className="post-item">
       <div className="post-item-image-wrapper">
-        {/* <img src={props.post?.image} alt={props.post?.title} className="post-item-image" /> */}
+        <img src={props.post?.image.url} alt={props.post?.title} className="post-item-image" />
         </div>
 
 <div className="post-item-info-wrapper">
     <div className="post-item-info">
     <div className="post-item-author">
-        <strong>Author</strong>
-        <Link className="post-item-username" to="/profile/1">{props.post?.user.username}</Link>
+        <strong>Author </strong>
+        <Link className="post-item-username" to={profileLink}>{props.username? props.username : props.post?.user.username}</Link>
     </div>
     <div className="post-item-date">
         {new Date(props.post.createdAt).toDateString()}

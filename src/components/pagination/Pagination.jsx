@@ -1,17 +1,25 @@
 
 import './Pagination.css'
-const Pagination = () => {
+const Pagination = ({pages, currentPage, setCurrentPage}) => {
+    const generatedPages = [];
+    for(let i = 1; i <= pages ; i++){
+     generatedPages.push(i)
+    }
     return ( <div className="pagination">
-        <div className="page previous">
+        <button className="page previous"
+        onClick={()=> setCurrentPage(prev => prev-1)}
+        disabled={currentPage === 1}>
             Previous
-        </div>
-        {[1,2,3,4,5].map(page => (
-        <div key={page} className="page">
+        </button>
+        {generatedPages.map(page => (
+        <div key={page} className={currentPage === page ? "page active" : "page"} onClick={()=>setCurrentPage(page)}>
 {page}
         </div>))}
-        <div className="page next">
+        <button className="page next"
+                onClick={()=> setCurrentPage(prev => prev+1)}
+                disabled={currentPage === pages}>
             Next
-        </div>
+        </button>
     </div> );
 }
 

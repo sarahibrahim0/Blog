@@ -1,32 +1,45 @@
 
-import styles from './Home.module.css'
+
+import PostList from "../../components/posts/PostList";
+import "./Home.css";
+import Sidebar from "../../components/sidebar/Sidebar";
 import { Link } from "react-router-dom";
-import { categories, posts } from "../../dummyData";
-import PostList from '../../components/posts/PostList';
-import Sidebar from '../../components/sidebar/Sidebar';
-import CreatePost from '../create-post/CreatePost';
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchPosts } from "../../redux/apiCalls/postApiCalls";
+import { fetchCategories } from "../../redux/apiCalls/categoryApiCalls";
+
+
 const Home = () => {
-    return (     <section className="home">
-    <div className={styles.homeHeroHeader}>
-      <div className={styles.homeHeroHeaderLayout}>
-        <h1 className={styles.homeTitle}>Welcome to Blog</h1>
+  const dispatch = useDispatch();
+  const { posts } = useSelector(state => state.post);
+  const {categories} = useSelector(state=>state.category)
+
+  useEffect(() => {
+    dispatch(fetchPosts(1));
+    dispatch(fetchCategories())
+  }, []);
+
+  return (
+    <section className="home">
+      <div className="home-hero-header">
+        <div className="home-hero-header-layout">
+          <h1 className="home-title">Welcome to Blog</h1>
+        </div>
       </div>
-    </div>
-    <div className={styles.homeLatestPost}>Latest Posts</div>
-    <div className={styles.homeContainer}>
-      <PostList posts={posts.slice(0, 3)} />
-      <Sidebar categories= {categories}/>
-    </div>
-    <div className={styles.homeSeePostsLink}>
-      <Link className="home-link" to="/posts">
-        See All Posts
-      </Link>
-    </div>
-  </section> );
+{    posts.length>0 ? ( <div className="home-latest-post">Latest Posts</div>) :  (<div className="home-latest-post">No Posts Yet</div>)
 }
+<div className="home-container">
+        <PostList posts={posts} />
+        <Sidebar categories= {categories} />
+      </div>
+      <div className="home-see-posts-link">
+        <Link to="/posts" className="home-link">
+          See All Posts
+        </Link>
+      </div>
+    </section>
+  );
+};
 
 export default Home;
-
-
-
-

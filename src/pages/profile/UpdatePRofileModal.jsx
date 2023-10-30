@@ -1,19 +1,15 @@
 import "./UpdateProfileModal.css";
 import { toast} from "react-toastify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateProfile } from "../../redux/apiCalls/profileApiCalls";
 
-const user = {
-    username: "sarah",
-    bio: "hello im sarah",
-  };
-
-
-const UpdatePRofileModal = ({ setUpdateProfile }) => {
-  const [username, setUsername] = useState(user.username);
-  const [bio, setBio] = useState(user.bio);
+const UpdatePRofileModal = ({ setUpdateProfile, profile }) => {
+  const [username, setUsername] = useState(profile.username);
+  const [bio, setBio] = useState(profile.bio);
   const [password, setPassword] = useState("");
 
-
+const dispatch = useDispatch()
   // From Submit Handler
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -25,8 +21,11 @@ const UpdatePRofileModal = ({ setUpdateProfile }) => {
     if (password.trim() !== "") {
       updatedUser.password = password;
     }
-    console.log(updatedUser);
+
+    dispatch(updateProfile(profile?._id,updatedUser));
+    setUpdateProfile(false);
   };
+
 
 
   return (

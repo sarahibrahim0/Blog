@@ -1,14 +1,34 @@
 
+import { useDispatch, useSelector } from 'react-redux';
 import AddCategoryForm from './AddCategoryForm';
 import './Admin.css';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { fetchCategories } from '../../redux/apiCalls/categoryApiCalls';
+import { getUsersCount } from '../../redux/apiCalls/profileApiCalls';
+import { getPostsCount } from '../../redux/apiCalls/postApiCalls';
+import { fetchComments } from '../../redux/apiCalls/commentApiCalls';
 const AdminMain = () => {
+    const dispatch = useDispatch();
+    const{categories} = useSelector(state=>state.category);
+    const{userCount} = useSelector(state=>state.profile);
+    const{postsCount} = useSelector(state=>state.post);
+    const{comments} = useSelector(state=>state.comment);
+
+
+
+    useEffect(()=>{
+        dispatch(fetchCategories());
+        dispatch(getUsersCount());
+        dispatch(getPostsCount());
+        dispatch(fetchComments());
+    },[])
     return (<div className="admin-main">
         <div className="admin-main-header">
             <div className="admin-main-card">
                 <h5 className="admin-card-title">users</h5>
                 <div className="admin-card-count">
-                    120
+                    {userCount}
                 </div>
                 <div className="admin-card-link-wrapper">
                     <Link to="/admin-dashboard/users-table" className="admin-card-link">
@@ -25,7 +45,7 @@ const AdminMain = () => {
             <div className="admin-main-card">
                 <h5 className="admin-card-title">posts</h5>
                 <div className="admin-card-count">
-                    210
+                    {postsCount}
                 </div>
                 <div className="admin-card-link-wrapper">
                     <Link to="/admin-dashboard/posts-table" className="admin-card-link">
@@ -42,7 +62,7 @@ const AdminMain = () => {
             <div className="admin-main-card">
                 <h5 className="admin-card-title">categories</h5>
                 <div className="admin-card-count">
-                    10
+                    {categories.length}
                 </div>
                 <div className="admin-card-link-wrapper">
                     <Link to="/admin-dashboard/categories-table" className="admin-card-link">
@@ -59,11 +79,12 @@ const AdminMain = () => {
             <div className="admin-main-card">
                 <h5 className="admin-card-title">comments</h5>
                 <div className="admin-card-count">
-                    44
+                {comments?.length}
+
                 </div>
                 <div className="admin-card-link-wrapper">
                     <Link to="/admin-dashboard/comments-table" className="admin-card-link">
-                    see all comments
+                           See all comments
                     </Link>
                     <div className="admin-card-icon">
                         <i className="bi bi-chat-left-text">

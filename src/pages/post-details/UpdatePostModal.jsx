@@ -1,29 +1,31 @@
 import "./UpdatePostModal.css";
 import { toast, ToastContainer } from "react-toastify";
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updatePost } from "../../redux/apiCalls/postApiCalls";
+import { fetchCategories } from "../../redux/apiCalls/categoryApiCalls";
 
 const UpdatePostModal = ({ setUpdatePost, post }) => {
   const [title, setTitle] = useState(post.title);
   const [description, setDescription] = useState(post.description);
   const [category, setCategory] = useState(post.category);
-  const [prevCategory, setPrevCategory] = useState(post.category);
 
+
+  const dispatch = useDispatch();
+  const {categories} = useSelector(state=>state.category)
   // From Submit Handler
   const formSubmitHandler = (e) => {
     e.preventDefault();
     if(title.trim() === "" && description.trim() === ""  ) return toast.error("Please write something")
-    console.log({ title, description, category });
+    dispatch(updatePost({title, description, category},post?._id));
+
+    setUpdatePost(false);
+
   };
 
   useEffect(() => {
-    if (category === prevCategory) {
-      console.log(category);
-    }
-    console.log(category , prevCategory)
-
-    setPrevCategory(category);
-    console.log(category , prevCategory)
-  }, [category, prevCategory]);
+dispatch(fetchCategories())
+  }, []);
 
 
   return (
@@ -51,9 +53,10 @@ const UpdatePostModal = ({ setUpdatePost, post }) => {
           <option disabled value="">
             Select A Category
           </option>
-          <option value="music">music</option>
-          <option value="travelling">travelling</option>
-          <option value="drinks">drinks</option>
+          {
+       categories?.map(category=> <option key={category?._id} value={category?.title}>{category?.title}</option>)
+          }
+
         </select>
         <textarea
           className="update-post-textarea"
