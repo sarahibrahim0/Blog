@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import request from "../../utils/reques";
-import { act } from "react-dom/test-utils";
 
 const categorySlice = createSlice({
     name: 'category',

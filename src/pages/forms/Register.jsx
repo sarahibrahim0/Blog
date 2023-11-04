@@ -40,7 +40,6 @@ const Register = () => {
            navigate("/login");
         }
     })
-    console.log(registerMessage)
 }
 
   return (

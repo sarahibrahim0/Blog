@@ -7,19 +7,12 @@ import { toast } from "react-toastify";
 export function loginUser(user) {
   return async (dispatch) => {
     try {
-      // const response = await fetch("http://localhost:8000/api/auth/login",{
-      //     method:"POST",
-      //     body: JSON.stringify(user),
-      //     headers: {
-      //         "Content-Type": "application/json"
-      //     }
-      // });
-      // const data = await response.json();
+
       const { data } = await request.post("/api/auth/login", user);
       //Must write the action in dispatch method
       dispatch(authActions.login(data));
       localStorage.setItem("userInfo", JSON.stringify(data));
-    } catch(error){ toast.error(error.response.data);
+    } catch(error){ toast.error(error.response.data.message);
    }
   };
 }
@@ -37,9 +30,27 @@ export function logoutUser() {
       try {
         const { data } = await request.post("/api/auth/register", user);
         //Must write the action in dispatch method
-        dispatch(authActions.register(data));
-      } catch(error){ toast.error(error.response.data);
-      }
+        dispatch(authActions.register(data.message));
+
+      } catch(error){
+
+        toast.error(error.response.data.message);
+             }
     };
   }
 
+
+
+  export function verifyEmail(userId, token) {
+    return async (dispatch, getState) => {
+      try {
+        console.log(userId, token)
+      await request.get(`/api/auth/${userId}/verify/${token}`);
+        //Must write the action in dispatch method
+        dispatch(authActions.setIseEmailVerified());
+      } catch(error){
+        console.log(error)
+
+      }
+    };
+  }
