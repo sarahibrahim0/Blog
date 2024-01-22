@@ -1,14 +1,12 @@
-const HeaderLeft = ({toggle , setToggle}) => {
-    return (
-        <div className="header-left">
-        <div className="header-logo">
-          <strong className="bog-tag">BLOG</strong>
-          <i className="bi bi-pencil"></i>
-        </div>
-        <div onClick={() => setToggle(prev => !prev)} className="header-menu">
-         {toggle ? <i className="bi bi-x-lg"> </i>: <i className="bi bi-list"></i> }
+import myImage from '../../images/cat-symbol-approve-svgrepo-com.svg';
 
-        </div>
+const HeaderLeft = () => {
+    return (
+        <div className=''>
+            <i className="fa-solid fa-blog text-5xl text-very-blue "></i>
+        <div >
+       </div>
+
       </div>
      );
 }

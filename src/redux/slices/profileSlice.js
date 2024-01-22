@@ -3,17 +3,35 @@ import { createSlice } from "@reduxjs/toolkit";
 const profileSlice = createSlice({
     name: "profile",
     initialState: {
+        admin: null,
         profile: null,
         loading: false,
         isProfileDeleted : false,
         userCount:null,
-        profiles:[]
+        profiles:[],
+        userPostsCount: null,
+        userFilteredPosts : []
 
     },
     reducers:{
+
+        setAdminProfile(state,action){
+            state.admin = action.payload;
+        },
 setProfile(state,action){
     state.profile = action.payload;
 },
+
+setProfilePostsCount(state,action){
+    state.userPostsCount = action.payload;
+},
+
+setProfileFilteredPosts(state,action){
+    state.userFilteredPosts = action.payload;
+},
+
+
+
 setProfilePhoto(state,action){
     state.profile.profilePhoto = action.payload;
 },

@@ -1,64 +1,83 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import swal from "sweetalert";
+import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../../redux/apiCalls/authApiCall";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Avatar } from "@mui/material";
 const HeaderRight = () => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [dropdown, setDropdown] = useState(false);
+  const navigate = useNavigate();
+
+  const items = ["profile", "logout"];
+  let myClassNames = ["active", "linkWrapper"];
+
+  const handleClick = (index,item) => {
+    // console.log(index,item, activeIndex)
+    // setActiveIndex(index);
+    if (item === "profile") {
+      navigate(`/profile/${user?._id}`);
+      setDropdown(false);
+    } else if (item === "logout") {
+      dispatch(logoutUser());
+      setDropdown(false)
+
+
+    }
+  };
+
+
+
   return (
-    <div className="header-right">
+    <div>
       {user ? (
         <>
-          <div className="header-right-user-info">
+          <div className=" relative flex flex-row items-center justify-between">
             <span
               onClick={() => setDropdown((prev) => !prev)}
-              className="header-right-username"
+              className="user-name whitespace-nowrap inline-block align-bottom uppercase mr-2  cursor-pointer lg:pointer-events-auto md:pointer-events-none sm:pointer-events-none"
             >
+              <span className="mr-2 2xl:text-base xl:text-base lg:text-sm md:text-sm sm:text-sm whitespace-nowrap ">
               {user?.username}
+              </span>
+              <i class="fa-solid fa-angle-down  text-s lg:!inline-block md:!hidden sm:!hidden"></i>
             </span>
-            <img
-              src={user?.profilePhoto.url}
+            <Avatar
+              src={user?.profilePhoto?.url}
               alt="user"
-              className="header-right-user-photo"
+              sx={{'width':'50px', 'height':'50px','borderRadius':'50%','objectFit':'cover','display':'inlineBlock'}}
             />
-            {dropdown && (
-              <div className="header-right-dropdown">
-                <Link
-                  onClick={() => setDropdown(false)}
-                  to={`/profile/${user?._id}`}
-                  className="header-dropdown-item"
-                >
-                  <i className="bi bi-file-person"></i>
-                  <span>Profile</span>
-                </Link>
-                <div className="header-dropdown-item">
-                  <i className="bi bi-box-arrow-in-left"></i>
-                  <span
-                    onClick={() => {
-                      dispatch(logoutUser());
-                      setDropdown(false);
-                    }}
-                  >
-                    Log Out
-                  </span>
-                </div>
-              </div>
-            )}
+            <ul className={!dropdown ? "dropDown" : "activeDrop"} >
+              {items.map((item, index) => {
+                return (
+                  <li
+                    key={index}
+                    onClick={() => handleClick(index, item)}
+                    className={dropdown? "linkWrapper pointer-events-auto" : "pointer-events-none linkWrapper"}>
+                    <Link className="headerRightNavLink">
+                      <span>{item}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+
+            </ul>
           </div>
         </>
       ) : (
-        <>
-          <Link to="/login" className="header-right-link">
-            <i className="bi bi-box-arrow-in-right"></i>
-            <span>Login</span>
+        <ul className="flex flex-row" >
+          <Link to="/login" className="navLink mr-3 whitespace-nowrap  2xl:text-base xl:text-base lg:text-base md:text-base sm:text-2xs ">
+            <i className="bi bi-box-arrow-in-right 2xl:text-base xl:text-base lg:text-sm md:text-xs sm:text-2xs"></i>
+            <span className="ml-1 2xl:text-base xl:text-base lg:text-sm md:text-xs sm:text-2xs" >Login</span>
           </Link>
-          <Link to="/register" className="header-right-link">
-            <i className="bi bi-person-plus"></i>
-            <span>Register</span>
+          <Link to="/register" className="navLink whitespace-nowrap 2xl:text-base xl:text-base lg:text-base md:text-base sm:text-2xs " style={{ marginRight: "0" }} >
+            <i className="bi bi-person-plus 2xl:text-base xl:text-base lg:text-sm md:text-xs sm:text-2xs"></i>
+            <span style={{ marginLeft: "4px" }} className="2xl:text-base xl:text-base lg:text-sm md:text-xs sm:text-2xs">Register</span>
           </Link>
-        </>
+        </ul>
       )}
     </div>
   );

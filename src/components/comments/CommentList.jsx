@@ -10,6 +10,8 @@ import { deleteComment } from "../../redux/apiCalls/commentApiCalls";
 const CommentList = ({comments}) => {
   console.log(comments)
   const [updateComment, setUpdateComment] = useState(false);
+
+
   const [updatedComment, setUpdatedComment] = useState(null);
 
   const dispatch = useDispatch();
@@ -33,47 +35,57 @@ const CommentList = ({comments}) => {
     }).then((isOk) => {
       if (isOk) {
        dispatch(deleteComment(commentId));
-       
+
       }
     });
   };
 
   return (
-    <div className="comment-list">
-      <h4 className="comment-list-count">{comments?.length} Comments</h4>
+    <div href="#comments" className="w-full h-auto">
+     <h3 className="font-semibold text-blue-black">
+
+        {comments?.length} Comments</h3>
       {comments?.map((comment) => (
 
-        <div key={comment?._id} className="comment-item">
-          <div className="comment-item-info">
-            <div className="comment-item-user-info">
-              {/* <img
-                src=
-                alt=""
-                className="comment-item-user-photo"
-              /> */}
-              <span className="comment-item-username">{comment?.userName}</span>
+        <div  key={comment?._id} className=" box-border w-full h-auto p-3 border-[1px] rounded-lg my-5 flex flex-col ">
+          <div className="flex flex-row justify-between items-start ">
+            <div className="flex flex-row space-x-2">
+              <div className="authorImage ">
+                <img
+                  src={comment?.user?.profilePhoto?.url}
+                  alt="author"
+                  className="rounded-full w-12  h-12  object-cover "
+                />
             </div>
-            <div className="comment-item-time">
+             <span className="inline-block self-center font-semibold">{comment?.userName}</span>
+            </div>
+            <div className="self-center">
               <Moment fromNow ago>
             {comment?.createdAt}
             </Moment>{" "}
             ago
             </div>
           </div>
-          <p className="comment-item-text">{comment?.text}</p>
-{comment?.user === user?._id &&(
-            <div className="comment-item-icon-wrapper">
+          <p className="my-4 font-light  text-pretty  ">{comment?.text}</p>
+{comment?.user?._id === user?._id &&(
+            <div className="flex flex-row space-x-2 justify-end items-start ">
             <i
               onClick={()=>updateCommentHandler(comment)}
-              className="bi bi-pencil-square"
+              className="far fa-edit text-very-blue text-2xs cursor-pointer" title="edit comment"
             ></i>
-            <i onClick={()=> deleteCommentHandler(comment?._id)} className="bi bi-trash-fill"></i>
+            <i title="delete comment" onClick={()=> deleteCommentHandler(comment?._id)} className="cursor-pointer   fa-regular fa-trash-can text-2xs  text-very-blue"></i>
+
           </div>
 )}
         </div>
       ))}
+
+
       {updateComment && (
-        <UpdateCommentModal updatedComment={updatedComment} setUpdateComment={setUpdateComment} />
+        <div className=" overflow-auto">
+        <UpdateCommentModal updatedComment={updatedComment} setUpdateComment={setUpdateComment} updateComment={updateComment} />
+
+        </div>
       )}
     </div>
   );

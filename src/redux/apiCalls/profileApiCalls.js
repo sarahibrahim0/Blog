@@ -10,11 +10,33 @@ export function getUserProfile(userId) {
         const { data } = await request.get(`/api/users/profile/${userId}`);
         //Must write the action in dispatch method
         dispatch(profileActions.setProfile(data));
-      } catch(error){ toast.error(error.response.data);
+        dispatch(profileActions.setProfilePostsCount(data.posts.length))
+      } catch(error){
+        toast.error(error.response.data);
       }
     };
   }
 
+  export function getUserPosts(userId, currentPage) {
+    return async (dispatch) => {
+      try {
+        const { data } = await request.get(`/api/users/user/${userId}?pageNumber=${currentPage}`);
+        //Must write the action in dispatch method
+        console.log(data + 'dataa')
+        dispatch(profileActions.setProfileFilteredPosts(data));
+      } catch(error){ toast.error(error.response.data);
+      }
+    };
+  }
+  export function getAdmin() {
+    return async (dispatch) => {
+      try {
+        const { data } = await request.get(`/api/users/profile/64fe389e629a527b361cfff3`);
+        dispatch(profileActions.setAdminProfile(data));
+      } catch(error){ toast.error(error.response.data);
+      }
+    };
+  }
 
   export function uploadProfilePhoto(newphoto) {
     return async (dispatch, getState) => {

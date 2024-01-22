@@ -1,3 +1,5 @@
+import ''
+
 .category {
     min-height: calc(100vh - 130px);
     padding: 20px;
@@ -27,3 +29,4 @@
     text-decoration: underline;
     font-weight: 500;
 }
+

@@ -7,12 +7,12 @@ import { toast } from "react-toastify";
 export function loginUser(user) {
   return async (dispatch) => {
     try {
-
       const { data } = await request.post("/api/auth/login", user);
       //Must write the action in dispatch method
       dispatch(authActions.login(data));
       localStorage.setItem("userInfo", JSON.stringify(data));
-    } catch(error){ toast.error(error.response.data.message);
+    } catch(error){
+      toast.error(error.response.data);
    }
   };
 }
@@ -31,10 +31,8 @@ export function logoutUser() {
         const { data } = await request.post("/api/auth/register", user);
         //Must write the action in dispatch method
         dispatch(authActions.register(data.message));
-
       } catch(error){
-
-        toast.error(error.response.data.message);
+        toast.error(error.response.data);
              }
     };
   }
@@ -44,12 +42,15 @@ export function logoutUser() {
   export function verifyEmail(userId, token) {
     return async (dispatch, getState) => {
       try {
-        console.log(userId, token)
+      dispatch(authActions.setIsVerifying());
       await request.get(`/api/auth/${userId}/verify/${token}`);
         //Must write the action in dispatch method
         dispatch(authActions.setIseEmailVerified());
+        dispatch(authActions.clearIsVerifying());
+
       } catch(error){
-        console.log(error)
+        toast.error(error.response.data);
+
 
       }
     };

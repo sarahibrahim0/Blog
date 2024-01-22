@@ -8,6 +8,7 @@ import { fetchCategories } from '../../redux/apiCalls/categoryApiCalls';
 import { getUsersCount } from '../../redux/apiCalls/profileApiCalls';
 import { getPostsCount } from '../../redux/apiCalls/postApiCalls';
 import { fetchComments } from '../../redux/apiCalls/commentApiCalls';
+import DashboardItem from '../../components/dashboard-item/DashboardItem';
 const AdminMain = () => {
     const dispatch = useDispatch();
     const{categories} = useSelector(state=>state.category);
@@ -23,75 +24,25 @@ const AdminMain = () => {
         dispatch(getPostsCount());
         dispatch(fetchComments());
     },[])
-    return (<div className="admin-main">
-        <div className="admin-main-header">
-            <div className="admin-main-card">
-                <h5 className="admin-card-title">users</h5>
-                <div className="admin-card-count">
-                    {userCount}
-                </div>
-                <div className="admin-card-link-wrapper">
-                    <Link to="/admin-dashboard/users-table" className="admin-card-link">
-                    see all users
-                    </Link>
-                    <div className="admin-card-icon">
-                        <i className="bi bi-person">
+    return (
+    <div className="w-full ">
 
-                        </i>
-                    </div>
-                </div>
+        <div className="w-auto grid 2xl:grid-flow-col xl:grid-flow-col  lg:grid-flow-col 2xl:grid-cols-4 xl:grid-cols-4  lg:grid-cols-4  md:grid-cols-12 sm:grid-cols-12 gap-2 ">
+
+            <div className="2xl:col-span-1 xl:col-span-1 lg:col-span-1 md:col-span-6 sm:col-span-6">
+                <DashboardItem title='Users' number={userCount} link='users-table'/>
             </div>
 
-            <div className="admin-main-card">
-                <h5 className="admin-card-title">posts</h5>
-                <div className="admin-card-count">
-                    {postsCount}
-                </div>
-                <div className="admin-card-link-wrapper">
-                    <Link to="/admin-dashboard/posts-table" className="admin-card-link">
-                    see all posts
-                    </Link>
-                    <div className="admin-card-icon">
-                        <i className="bi bi-file-post">
-
-                        </i>
-                    </div>
-                </div>
+            <div className="2xl:col-span-1 xl:col-span-1 lg:col-span-1  md:col-span-6 sm:col-span-6">
+                <DashboardItem title='Posts' number={postsCount} link='posts-table'/>
             </div>
 
-            <div className="admin-main-card">
-                <h5 className="admin-card-title">categories</h5>
-                <div className="admin-card-count">
-                    {categories.length}
-                </div>
-                <div className="admin-card-link-wrapper">
-                    <Link to="/admin-dashboard/categories-table" className="admin-card-link">
-                    see all categories
-                    </Link>
-                    <div className="admin-card-icon">
-                        <i className="bi bi-tag-fill">
-
-                        </i>
-                    </div>
-                </div>
+            <div className="2xl:col-span-1 xl:col-span-1 lg:col-span-1  md:col-span-6 sm:col-span-6">
+                <DashboardItem title='Categories' number={categories.length} link='categories-table'/>
             </div>
 
-            <div className="admin-main-card">
-                <h5 className="admin-card-title">comments</h5>
-                <div className="admin-card-count">
-                {comments?.length}
-
-                </div>
-                <div className="admin-card-link-wrapper">
-                    <Link to="/admin-dashboard/comments-table" className="admin-card-link">
-                           See all comments
-                    </Link>
-                    <div className="admin-card-icon">
-                        <i className="bi bi-chat-left-text">
-
-                        </i>
-                    </div>
-                </div>
+                      <div className="2xl:col-span-1 xl:col-span-1 lg:col-span-1  md:col-span-6 sm:col-span-6">
+                <DashboardItem title='Comments' number={comments.length} link='comments-table'/>
             </div>
         </div>
 

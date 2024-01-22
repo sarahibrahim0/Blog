@@ -10,7 +10,7 @@ try{
     dispatch(categoryActions.setCategories(data));
 
 }catch (error) {
-    toast.error(error.response.data.message);
+    toast.error(error.response.data?.message);
     console.log(error)
   }
     }
@@ -28,7 +28,7 @@ try{
     toast.success("Category Added Successfully")
 
 }catch (error) {
-    toast.error(error.response.data.message);
+    toast.error(error.response.data?.message);
     console.log(error)
   }
     }
@@ -44,7 +44,7 @@ try{
     toast.success(data?.message)
 
 }catch (error) {
-    toast.error(error.response.data.message);
+    toast.error(error.response.data?.message);
     console.log(error)
   }
     }

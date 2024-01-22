@@ -54,10 +54,10 @@ const postSlice = createSlice({
         comment._id === action.payload._id?action.payload :comment )
     },
     deletePostComment(state, action) {
-      const comment = state.post.comments.find(c => c._id === action.payload);
-      const commentIndex = state.post.comments.indexOf(comment);
+      const comment = state.post.comments?.find(c => c?._id === action.payload);
+      const commentIndex = state.post.comments?.indexOf(comment);
 
-      state.post.comments.splice(commentIndex, 1);
+      state.post.comments?.splice(commentIndex, 1);
     }
   },
 

@@ -2,10 +2,85 @@
     padding: 30px;
 }
 
+.dividerLine0{
+    border-bottom: 2px solid;
+
+  }
+
+  .smIcon0{
+    margin: 8px 13px;
+    color:#4776E6;
+    transition: all .3s;
+    position:relative
+}
+
+
+
+.smIcon0::before{
+
+    content: attr(data-title);
+    display: inline-block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 100%;
+    padding: 6px 8px;
+    background: #4776E6;
+    color: white;
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+    transition: 0.3s;
+    opacity: 0;
+    visibility: hidden;
+}
+
+
+
+.smIcon0:hover::before{
+visibility:visible;
+opacity:1
+
+}
+
+
+.smIcon00{
+    color:#4776E6;
+    transition: all .3s;
+    position:relative;
+    cursor: pointer;
+
+
+
+}
+
+
+
+.smIcon00::before{
+
+    content: 'edit profile';
+    display: inline-block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 100%;
+    padding: 6px 8px;
+    background: #4776E6;
+    color: white;
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+    transition: 0.3s;
+    opacity: 1;
+    visibility: visible;
+}
+
+
 .profile-loader{
     min-height : calc(100vh-130px);
     width: 100%;
     dispaly:flex;
+    flex-direction: flex-column;
     alighn-items: center;
     justify-content:center;
     margin:20px 0;
@@ -139,3 +214,93 @@
         text-align: center;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.author-social-links ul {
+    margin: 0;
+    padding: 8px;
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 50px;
+    border: 1px solid var(--soft-border-color);
+}
+
+.author-social-links ul li {
+    margin: 0 10px;
+    line-height: 1;
+}
+
+.author-social-links a {
+    position: relative;
+    font-size: 1.4rem;
+    color: var(--second-color);
+    display: block;
+}
+
+.author-social-links a:hover {
+    color: var(--accent-color);
+}
+
+.author-social-links a i {
+    display: block;
+}
+
+.author-social-links a::before {
+    content: attr(data-title);
+    display: inline-block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 100%;
+    padding: 6px 8px;
+    background: var(--second-color);
+    color: var(--second-color-alt);
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+    transition: 0.3s;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.author-social-links a:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+
+
+@keyframes spinning {
+    from   {transform: rotate(0deg);
+  }
+    to  {transform: rotate(360deg);
+    }
+
+    }
+
+
+    .loading{
+        animation-name: spinning;
+        animation-duration: 2s;
+        animation-timing-function: linear;
+        animation-play-state: running;
+        animation-fill-mode: both;
+        animation-iteration-count:infinite;
+    }
+

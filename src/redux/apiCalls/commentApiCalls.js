@@ -32,9 +32,10 @@ export function setComment(newComment){
             });
 
             dispatch(postActions.addCommentToPost(data));
-            toast.success("comment added successfully")
+            console.log('success')
         }catch(error){
         toast.error(error.response.data.message);
+        console.log('error')
         }
 
     }
@@ -44,18 +45,26 @@ export function deleteComment(commentId){
     return async (dispatch, getState)=>{
 
         try{
-            const {data} = await request.delete(`/api/comments/${commentId}`,{
+            const res = await request.delete(`/api/comments/${commentId}`,{
                 headers:{
                     Authorization:"Bearer "+ getState().auth.user.token
                 }
             });
-            dispatch(postActions.deletePostComment(commentId));
-            dispatch(commentActions.deleteComment(commentId));
-            toast.success(data?.message);
+
+            try{
+                dispatch(postActions.deletePostComment(commentId));
+                dispatch(commentActions.deleteComment(commentId));
+                toast.success(res.data?.message);
+
+            }catch(er){
+              toast.error(er.response.data.message)
+            console.log(er)
+            }
 
         }catch(error){
+            toast.error(error.response.data.message)
             console.log(error)
-        toast.error(error.response.data.message);
+
         }
 
     }
