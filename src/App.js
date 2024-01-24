@@ -105,7 +105,6 @@ useEffect(() => {
             path="/api/auth/:userId/verify/:token"
             element={!user ? <VerifyEmail /> : <Navigate to="/" />}
           />
-
 <Route
             path="/email-sent"
             element={<EmailSent/> }
