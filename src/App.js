@@ -102,7 +102,7 @@ useEffect(() => {
             element={!user ? <Register /> : <Navigate to="/" />}
           />
           <Route
-            path="https://blog-5g3k.onrender.com/api/auth/:userId/verify/:token" Component={VerifyEmail}
+            path="/api/auth/:userId/verify/:token" Component={VerifyEmail}
             // element={!user ? <VerifyEmail /> : <Navigate to="/" />}
           />
 <Route
