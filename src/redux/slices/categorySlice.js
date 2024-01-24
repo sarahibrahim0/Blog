@@ -4,7 +4,8 @@ import request from "../../utils/reques";
 const categorySlice = createSlice({
     name: 'category',
     initialState:{
-        categories: []
+        categories: [],
+        categoryPosts : []
     },
     reducers:{
         setCategories(state,actions){
@@ -15,7 +16,10 @@ const categorySlice = createSlice({
             },
             deleteCategory(state,action){
              state.categories=   state.categories.filter(category=> category._id !== action.payload)
-            }
+            },
+            setCategoryPosts(state,action){
+                state.categoryPosts = action.payload;
+            },
     }
 })
 

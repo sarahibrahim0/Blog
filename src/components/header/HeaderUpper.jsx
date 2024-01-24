@@ -20,7 +20,7 @@ const HeaderUpper = () => {
                     <li className='li1 lg:text-xs text-white ml-1' style={{'marginLeft':'0px'}} >
                     <FontAwesomeIcon  icon={faPhoneVolume}  size='xs' color='white' transform={{rotate: 45}}/>
             <span className='sm:text-3xs text-xs color-white ml-1 ' >
-            01146446791
+            +201146446791
             </span>
                     </li>
 

@@ -117,14 +117,14 @@ opacity:1
 
 @media(min-width: 769px) and (max-width:1600px){
     .modal {
-        width:50%;
-        height:70%;
+        width:55%;
+        height:80%;
         border-radius:12px
 
     },
     .modalHidden {
-        width:50%;
-        height:70%;
+        width:55%;
+        height:80%;
         border-radius:12px
 
     }

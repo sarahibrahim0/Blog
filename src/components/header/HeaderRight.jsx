@@ -43,7 +43,7 @@ const HeaderRight = () => {
               <span className="mr-2 2xl:text-base xl:text-base lg:text-sm md:text-sm sm:text-sm whitespace-nowrap ">
               {user?.username}
               </span>
-              <i class="fa-solid fa-angle-down  text-s lg:!inline-block md:!hidden sm:!hidden"></i>
+              <i className="fa-solid fa-angle-down  text-s lg:!inline-block md:!hidden sm:!hidden"></i>
             </span>
             <Avatar
               src={user?.profilePhoto?.url}

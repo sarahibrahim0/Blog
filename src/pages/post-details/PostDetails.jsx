@@ -45,7 +45,6 @@ const PostDetails = () => {
   const [share, shareList] = useState(false);
 
 
-
 useEffect(()=>{
   initTE({ Popover, Ripple });
 
@@ -58,8 +57,6 @@ useEffect(()=>{
       showLikes((prev)=>!prev)
     }
   }
-
-  let location = useLocation();
 
 
   const validationSchema = Yup.object().shape({
@@ -91,6 +88,7 @@ useEffect(()=>{
 
   useEffect(() => {
     dispatch(fetchPostById(id));
+
     window.scrollTo(0, 0);
   }, [id]);
 
@@ -334,6 +332,7 @@ useEffect(()=>{
   <div className="absolute -top-10 z-10 rounded p-3 right-0 bg-[#000000d9] h- auto w-auto flex flex-col space-y-2 text-[#f4f4f4] ">
  {
   post.likes.map((user, index)=>{
+
     return(<span key={index} className="text-xs whitespace-nowrap">
       {
         user.username? ( <span>{user.username} </span>) : <span> 'User Not Found' </span>
@@ -432,8 +431,8 @@ useEffect(()=>{
 
                   </div>
                   <ul className="flex flex-col justify-between space-y-3 items-start mt-7 min-w-max overflow-auto">
-                    {post?.likes.map((user, index) => (
-                       <li key={index} className="flex flex-row  items-center space-x-2 ">
+                    {post.likes.map((user, index) => (
+                       <li key={index} className="flex flex-row items-center space-x-2 ">
 
 <img src={user.profilePhoto?.url} alt="user" className="inline-block rounded-full w-12 h-12  object-cover "  />
 

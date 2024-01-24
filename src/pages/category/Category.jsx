@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { fetchPostsByCategory } from '../../redux/apiCalls/postApiCalls';
 import Pagination from '../../components/pagination/Pagination';
-import { fetchCategories } from '../../redux/apiCalls/categoryApiCalls';
+import { fetchCategories, fetchCategoryPosts } from '../../redux/apiCalls/categoryApiCalls';
 import myImage from '../../images/9264822.jpg'
-const POST_PER_PAGE = 1;
+const POST_PER_PAGE = 6;
 
 const Category = () => {
 
@@ -15,6 +15,8 @@ const Category = () => {
     const {category}= useParams();
     const dispatch = useDispatch();
     const{postsCategories} = useSelector(state=>state.post);
+    const {categoryPosts} = useSelector(state=>state.category);
+    const [currentPage, setCurrentPage] = useState(1);
 
 
     useEffect(()=>{
@@ -29,10 +31,13 @@ const Category = () => {
      window.scrollTo(0,0);
     },[category])
 
+    useEffect(() => {
+      dispatch(fetchCategoryPosts(category , currentPage));
+      window.scrollTo(0, 0);
+    }, [currentPage]);
 
 
     const pages = Math.ceil(postsCategories.length/POST_PER_PAGE);
-    const [currentPage, setCurrentPage] = useState(1);
 
     return (
 <>
@@ -81,20 +86,29 @@ const Category = () => {
       <div className="box-border w-full grid  xl:gap-y-7 lg:gap-y-7 md:gap-y-2 sm:gap-y-2 ">
 
               {
-                postsCategories?.map((post, index) => (
+                categoryPosts?.map((post, index) => (
 
   <article key={index}  className="box-border w-full   bg-white h-auto p-5 grid grid-cols-12 rounded-2xl relative border-[1px] border-[#8589a038]  transition-all duration-[842.435ms] ease-in-out boxShadow">
-      <div className="box-border  w-full relative xl:col-span-4 lg:col-span-4 md:col-span-12  sm:col-span-12 h-auto md:mb-3 sm:mb-3">
-          <Link className="box-border w-full block  rounded-2xl  h-full overflow-hidden "
-          to={`/posts/details/${post?._id}`}>
-          <img src={post?.image?.url} alt='post' className=" inline-block cursor-pointer rounded-2xl w-full  h-full object-cover transition-all duration-[.7s] ease-in-out hover:scale-[1.2]"/>
-          </Link>
-          <Link to={`/posts/categories/${post?.category}`}>
-          <span className=" inline-block w-auto  bottom-[30px] left-0  absolute bg-black text-white px-4 py-[7px] text-xs whitespace-normal">    {post?.category}
-      </span>
-          </Link>
+                  <div className=" flex flex-row items-center justify-start xl:p-5 lg:p-5  box-border h-full w-full  xl:col-span-4 lg:col-span-4 md:col-span-12  sm:col-span-12  md:mb-3 sm:mb-3">
+                          <Link className="box-border  w-full block h-full image rounded-2xl overflow-hidden  "
+                          to={`/posts/details/${post?._id}`}>
 
-      </div>
+<div className="h-auto w-auto relative overflow-hidden  rounded-2xl">
+<img src={post?.image?.url} alt={post?.title} className=" inline-block cursor-pointer rounded-2xl w-full h-[301px]    object-cover transition-all duration-[.7s] ease-in-out hover:scale-[1.2]"/>
+
+<Link to={`/posts/categories/${post?.category}`}>
+                          <span className=" inline-block w-auto  bottom-[30px] left-0  absolute bg-black text-white px-4 py-[7px] text-xs whitespace-normal">    {post?.category}
+                      </span>
+                          </Link>
+</div>
+
+
+
+
+                          </Link>
+
+
+                      </div>
 
       <div className="box-border flex flex-col h-auto xl:justify-center lg:justify-center items-start md:space-y-5 sm:space-y-5  xl:col-span-8 lg:col-span-8 md:col-span-12 sm:col-span-12 m:mb-4 sm:mb-4 xl:p-5 lg:p-5 ">
       <h3 className="title min-h-max  w-full ">

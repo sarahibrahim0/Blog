@@ -16,6 +16,20 @@ try{
     }
 }
 
+
+
+export function fetchCategoryPosts(category, currentPage) {
+    return async (dispatch) => {
+      try {
+        const { data } = await request.get(`/api/categories/category/${category}?pageNumber=${currentPage}`);
+        //Must write the action in dispatch method
+        console.log(data + 'dataa')
+        dispatch(categoryActions.setCategoryPosts(data));
+      } catch(error){ toast.error(error.response.data);
+      }
+    };
+  }
+
 export function setCategory(newCategory) {
     return async (dispatch, getState)=> {
 try{

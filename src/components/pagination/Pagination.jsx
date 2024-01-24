@@ -13,7 +13,7 @@ const Pagination = ({pages, currentPage, setCurrentPage}) => {
       <button  onClick={()=> setCurrentPage(prev => prev-1)} disabled={currentPage === 1}  >
         <a
           className={currentPage === 1? 'disabled' : 'page'}
-          ><i class="fa-solid fa-arrow-left"></i></a
+          ><i className="fa-solid fa-arrow-left"></i></a
         >
       </button>
 
@@ -47,7 +47,7 @@ const Pagination = ({pages, currentPage, setCurrentPage}) => {
       <button  onClick={()=> setCurrentPage(prev => prev+1)} disabled={currentPage === pages}>
         <a
          className={currentPage === pages? 'disabled' : 'page'}
-          ><i class="fa-solid fa-arrow-right"></i></a
+          ><i className="fa-solid fa-arrow-right"></i></a
         >
       </button>
     </ul>
