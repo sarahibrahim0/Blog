@@ -79,7 +79,7 @@ opacity:1
     overflow:auto;
     transform:translateY(0);
     transition: transform 0.3s ease-out;
-    padding:12px;
+    padding:18px 12px;
 
 }
 

@@ -25,6 +25,7 @@ import Sidenaav from "./components/header/sidenav/Sidenaav";
 import { useState , useEffect} from "react";
 import Footer from "./components/footer/Footer";
 import EmailSent from "./pages/verify-email/EmailSent";
+import PasswordReseted from "./pages/forms/PasswordReseted";
 
 function App() {
   const { user } = useSelector((state) => state.auth);
@@ -102,7 +103,7 @@ useEffect(() => {
             element={!user ? <Register /> : <Navigate to="/" />}
           />
           <Route
-            path="/api/auth/:userId/verify/:token" 
+            path="/api/auth/:userId/verify/:token"
             element={!user ? <VerifyEmail /> : <Navigate to="/" />}
           />
 <Route
@@ -113,6 +114,11 @@ useEffect(() => {
           <Route
             path="/reset-password/:userId/:token"
             element={<ResetPassword />}
+          />
+
+<Route
+            path="/password-reset-successfully"
+            element={<PasswordReseted />}
           />
 
           <Route path="/profile/:id" element={<Profile />} />

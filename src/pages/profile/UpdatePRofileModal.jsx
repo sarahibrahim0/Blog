@@ -103,10 +103,10 @@ const UpdatePRofileModal = (props) => {
         className="w-full h-full absolute top-0 left-0 bg-transparent "
       ></div>
 
-      <div className={props.updateProfile ? "modal" : "modalHidden"}>
+      <div className={props.updateProfile ? "modal " : "modalHidden"}>
         <i
           title="exit form"
-          class="box-border fa-solid fa-x text-lg cursor-pointer absolute 2xl:right-4 xl:right-4 lg:right-4  md:m-auto sm:m-auto text-very-blue top-3"
+          class="box-border fa-solid fa-x sm:mb-5 text-lg cursor-pointer absolute 2xl:right-4 xl:right-4 lg:right-4  md:m-auto sm:m-auto text-very-blue top-3"
           onClick={() => props.setUpdateProfile(false)}
         ></i>
         <Formik
@@ -117,7 +117,7 @@ const UpdatePRofileModal = (props) => {
         >
           {(formik) => {
             return (
-              <Form className="flex flex-col items-start justify-evenly m-auto relative w-[80%]  h-full ">
+              <Form className="flex flex-col items-start justify-evenly m-auto relative lg:w-[80%] sm:w-full h-full  ">
                 <div className="w-full flex flex-col space-y-1 items-center  ">
                   <div className="w-full flex flex-row  items-center space-x-3 ">
                     <label
@@ -208,14 +208,14 @@ const UpdatePRofileModal = (props) => {
                   />
                 </div>
 
-                <div className="w-full flex flex-col space-y-1 items-start">
+                <div className="w-full flex flex-col space-y-1 items-start ">
                   <FieldArray name="socialMedia">
                     {({ insert, remove, push }) => (
                       <>
-                        <div className="grid grid-flow-col gap-3 items-center  ">
+                        {/* <div className="grid grid-flow-col  gap-3 items-center  "> */}
                           <label
                             htmlFor="socialMedia"
-                            className=" inline font-semibold text-blue-black cursor-pointer whitespace-nowrap"
+                            className="  inline font-semibold text-blue-black cursor-pointer whitespace-nowrap "
                             onClick={() => {
                               if (formik.values.socialMedia.length < 5) {
                                 push({ name: "", url: "" });
@@ -225,15 +225,14 @@ const UpdatePRofileModal = (props) => {
                             Add Social Link
                           </label>
 
-                          <div className="flex flex-col space-y-3 ">
+                          <div className=" w-full   flex flex-col space-y-3 self-center">
                             {formik.values.socialMedia.length > 0 &&
                               formik.values.socialMedia.map((option, index) => (
                                 <div key={index}>
-                                  <div className="flex flex-row space-x-3 justify-between items-start">
+                                  <div className="w-full flex flex-row  lg:justify-between sm:space-x-2 items-star">
                                     <div className=" flex flex-col justify-center  items-start space-x-3 ">
                                       <Field name={`socialMedia[${index}].url`}>
                                         {(field) => {
-                                          console.log(field);
                                           return (
                                             <input
                                               placeholder="Enter your url"
@@ -298,7 +297,7 @@ const UpdatePRofileModal = (props) => {
                                 </div>
                               ))}
                           </div>
-                        </div>
+                        {/* </div> */}
                       </>
                     )}
                   </FieldArray>

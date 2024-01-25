@@ -26,8 +26,8 @@
 
 
 .header-upper li {
-  margin-left: calc(36px / 2);
-  margin-right: calc(36px / 2);
+  margin-left: calc(30px / 2);
+  margin-right: calc(30px / 2);
 }
 .li1:after {
   position: relative;
@@ -39,7 +39,7 @@
   box-sizing: border-box;
 }
 .li1:after {
-  right: calc(-36px / 2);
+  right: calc(-29px / 2);
 }
 
 .navLink {

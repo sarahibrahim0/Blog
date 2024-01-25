@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Field, Form, Formik , ErrorMessage } from "formik";
 import * as Yup from 'yup';
+import { useNavigate } from "react-router-dom";
 import {
   getResetPassword,
   resetPassword,
@@ -16,6 +17,7 @@ const ResetPassword = () => {
   const { isError } = useSelector((state) => state.password);
   const { userId, token } = useParams();
 
+  const navigate = useNavigate();
   useEffect(() => {
     console.log(isError)
     dispatch(getResetPassword(userId, token));
@@ -23,7 +25,8 @@ const ResetPassword = () => {
 
   // From Submit Handler
   const formSubmitHandler = (values) => {
-   return dispatch(resetPassword( values['password'], { userId, token }));
+    dispatch(resetPassword( values['password'], { userId, token }));
+    navigate('/password-reset-successfully');
   };
 
 
@@ -42,33 +45,7 @@ const ResetPassword = () => {
   });
 
   return (
-    // <section className="form-container">
-    //   {isError ?
-    //     <h1>Not Found</h1>
-    //    :
-    //     <>
-    //       <h1 className="form-title">Reset Password</h1>
-    //       <form onSubmit={formSubmitHandler} className="form">
-    //         <div className="form-group">
-    //           <label htmlFor="password" className="form-label">
-    //             New Password
-    //           </label>
-    //           <input
-    //             onChange={(e) => setPassword(e.target.value)}
-    //             value={password}
-    //             type="password"
-    //             id="password"
-    //             placeholder="Enter your new password"
-    //             className="form-input"
-    //           />
-    //         </div>
-    //         <button type="submit" className="form-btn">
-    //           Submit
-    //         </button>
-    //       </form>
-    //     </>
-    //   }
-    // </section>
+
 
     <section className="w-full min-h-screen flex flex-col items-center justify-start  p-10 ">
 

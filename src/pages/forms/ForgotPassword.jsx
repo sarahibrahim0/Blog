@@ -31,7 +31,7 @@ const ForgotPassword = () => {
 <Formik onSubmit={formSubmitHandler} initialValues={initialValues} validationSchema={schema}>
   {(formik)=>{
     return (
-<Form  className=" w-full flex flex-col justify-center items-center text-center">
+<Form  className=" w-full flex flex-col justify-center items-center text-center p-3">
         <div className="w-full flex flex-row justify-between items-center space-x-2 p-5">
         <label htmlFor="email" className="  text-sm font-[500]  text-blue-black ">
           Email
