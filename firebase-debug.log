@@ -1,13 +1,13 @@
-[debug] [2024-01-25T05:29:22.377Z] ----------------------------------------------------------------------
-[debug] [2024-01-25T05:29:22.382Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\sarah\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
-[debug] [2024-01-25T05:29:22.383Z] CLI Version:   13.0.3
-[debug] [2024-01-25T05:29:22.383Z] Platform:      win32
-[debug] [2024-01-25T05:29:22.383Z] Node Version:  v20.11.0
-[debug] [2024-01-25T05:29:22.384Z] Time:          Thu Jan 25 2024 07:29:22 GMT+0200 (Eastern European Standard Time)
-[debug] [2024-01-25T05:29:22.384Z] ----------------------------------------------------------------------
+[debug] [2024-01-25T05:31:38.473Z] ----------------------------------------------------------------------
+[debug] [2024-01-25T05:31:38.476Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\sarah\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2024-01-25T05:31:38.477Z] CLI Version:   13.0.3
+[debug] [2024-01-25T05:31:38.477Z] Platform:      win32
+[debug] [2024-01-25T05:31:38.477Z] Node Version:  v20.11.0
+[debug] [2024-01-25T05:31:38.478Z] Time:          Thu Jan 25 2024 07:31:38 GMT+0200 (Eastern European Standard Time)
+[debug] [2024-01-25T05:31:38.478Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2024-01-25T05:29:22.520Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2024-01-25T05:29:22.521Z] > authorizing via signed-in user (sarahibrahimabdelhamid@gmail.com)
+[debug] [2024-01-25T05:31:38.600Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-01-25T05:31:38.601Z] > authorizing via signed-in user (sarahibrahimabdelhamid@gmail.com)
 [info] 
      ######## #### ########  ######## ########     ###     ######  ########
      ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
@@ -30,18 +30,40 @@ Before we get started, keep in mind:
 [info] You can create multiple project aliases by running firebase use --add, 
 [info] but for now we'll just set up a default project.
 [info] 
-[debug] [2024-01-25T05:29:26.374Z] Using project from CLI flag: react-blog-86b6e
-[debug] [2024-01-25T05:29:26.378Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/react-blog-86b6e [none]
-[debug] [2024-01-25T05:29:27.055Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/react-blog-86b6e 200
-[debug] [2024-01-25T05:29:27.056Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/react-blog-86b6e {"projectId":"react-blog-86b6e","projectNumber":"1088813698352","displayName":"react-blog","name":"projects/react-blog-86b6e","resources":{"hostingSite":"react-blog-86b6e"},"state":"ACTIVE","etag":"1_062415cf-f944-4850-af46-41d2d9431b51"}
+[debug] [2024-01-25T05:31:42.295Z] Using project from CLI flag: react-blog-86b6e
+[debug] [2024-01-25T05:31:42.299Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/react-blog-86b6e [none]
+[debug] [2024-01-25T05:31:42.983Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/react-blog-86b6e 200
+[debug] [2024-01-25T05:31:42.984Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/react-blog-86b6e {"projectId":"react-blog-86b6e","projectNumber":"1088813698352","displayName":"react-blog","name":"projects/react-blog-86b6e","resources":{"hostingSite":"react-blog-86b6e"},"state":"ACTIVE","etag":"1_062415cf-f944-4850-af46-41d2d9431b51"}
 [info] i  Using project react-blog-86b6e (react-blog) 
 [info] 
 === Hosting Setup
-[debug] [2024-01-25T05:29:27.076Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/react-blog-86b6e [none]
-[debug] [2024-01-25T05:29:27.301Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/react-blog-86b6e 200
-[debug] [2024-01-25T05:29:27.302Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/react-blog-86b6e {"projectId":"react-blog-86b6e","projectNumber":"1088813698352","displayName":"react-blog","name":"projects/react-blog-86b6e","resources":{"hostingSite":"react-blog-86b6e"},"state":"ACTIVE","etag":"1_062415cf-f944-4850-af46-41d2d9431b51"}
+[debug] [2024-01-25T05:31:43.005Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/react-blog-86b6e [none]
+[debug] [2024-01-25T05:31:43.306Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/react-blog-86b6e 200
+[debug] [2024-01-25T05:31:43.306Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/react-blog-86b6e {"projectId":"react-blog-86b6e","projectNumber":"1088813698352","displayName":"react-blog","name":"projects/react-blog-86b6e","resources":{"hostingSite":"react-blog-86b6e"},"state":"ACTIVE","etag":"1_062415cf-f944-4850-af46-41d2d9431b51"}
 [info] 
 [info] Your public directory is the folder (relative to your project directory) that
 [info] will contain Hosting assets to be uploaded with firebase deploy. If you
 [info] have a build process for your assets, use your build's output directory.
+[info] 
+[debug] [2024-01-25T05:32:47.350Z] >>> [apiv2][query] GET https://www.gstatic.com/firebasejs/releases.json [none]
+[debug] [2024-01-25T05:32:47.693Z] <<< [apiv2][status] GET https://www.gstatic.com/firebasejs/releases.json 200
+[debug] [2024-01-25T05:32:47.693Z] <<< [apiv2][body] GET https://www.gstatic.com/firebasejs/releases.json {"current":{"version":"10.7.2","browserURL":"https://www.gstatic.com/firebasejs/10.7.2/firebase.js","packageURL":"https://www.gstatic.com/firebasejs/10.7.2/firebase.tgz"},"live":{"version":"10.7","browserURL":"https://www.gstatic.com/firebasejs/live/10.7/firebase.js","packageURL":"https://www.gstatic.com/firebasejs/live/10.7/firebase.tgz"},"components":{"analytics":"https://www.gstatic.com/firebasejs/10.7.2/firebase-analytics.js","app":"https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js","app-check":"https://www.gstatic.com/firebasejs/10.7.2/firebase-app-check.js","auth":"https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js","auth/cordova":"https://www.gstatic.com/firebasejs/10.7.2/firebase-auth/cordova.js","functions":"https://www.gstatic.com/firebasejs/10.7.2/firebase-functions.js","firestore":"https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js","firestore/lite":"https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore/lite.js","installations":"https://www.gstatic.com/firebasejs/10.7.2/firebase-installations.js","storage":"https://www.gstatic.com/firebasejs/10.7.2/firebase-storage.js","performance":"https://www.gstatic.com/firebasejs/10.7.2/firebase-performance.js","remote-config":"https://www.gstatic.com/firebasejs/10.7.2/firebase-remote-config.js","messaging":"https://www.gstatic.com/firebasejs/10.7.2/firebase-messaging.js","messaging/sw":"https://www.gstatic.com/firebasejs/10.7.2/firebase-messaging/sw.js","database":"https://www.gstatic.com/firebasejs/10.7.2/firebase-database.js","firestore.memory":"https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.memory.js"}}
+[info] +  Wrote build/index.html 
+[info] 
+[info] i  Detected a .git folder at D:\Blog\blog-frontend 
+[info] i  Authorizing with GitHub to upload your service account to a GitHub repository's secrets store. 
+[info] 
+[info] Visit this URL on this device to log in:
+[info] https://github.com/login/oauth/authorize?client_id=89cf50f02ac6aaed3484&state=207930823&redirect_uri=http%3A%2F%2Flocalhost%3A9005&scope=read%3Auser%20repo%20public_repo
+[info] 
+[info] Waiting for authentication...
+[debug] [2024-01-25T05:32:53.577Z] >>> [apiv2][query] POST https://github.com/login/oauth/access_token [none]
+[debug] [2024-01-25T05:32:53.578Z] >>> [apiv2][body] POST https://github.com/login/oauth/access_token [stream]
+[debug] [2024-01-25T05:32:54.090Z] <<< [apiv2][status] POST https://github.com/login/oauth/access_token 200
+[debug] [2024-01-25T05:32:54.090Z] <<< [apiv2][body] POST https://github.com/login/oauth/access_token {"access_token":"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","token_type":"bearer","scope":"read:user,repo"}
+[debug] [2024-01-25T05:32:54.107Z] >>> [apiv2][query] GET https://api.github.com/user [none]
+[debug] [2024-01-25T05:32:54.632Z] <<< [apiv2][status] GET https://api.github.com/user 200
+[debug] [2024-01-25T05:32:54.633Z] <<< [apiv2][body] GET https://api.github.com/user {"login":"sarahibrahim0","id":75214911,"node_id":"MDQ6VXNlcjc1MjE0OTEx","avatar_url":"https://avatars.githubusercontent.com/u/75214911?v=4","gravatar_id":"","url":"https://api.github.com/users/sarahibrahim0","html_url":"https://github.com/sarahibrahim0","followers_url":"https://api.github.com/users/sarahibrahim0/followers","following_url":"https://api.github.com/users/sarahibrahim0/following{/other_user}","gists_url":"https://api.github.com/users/sarahibrahim0/gists{/gist_id}","starred_url":"https://api.github.com/users/sarahibrahim0/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/sarahibrahim0/subscriptions","organizations_url":"https://api.github.com/users/sarahibrahim0/orgs","repos_url":"https://api.github.com/users/sarahibrahim0/repos","events_url":"https://api.github.com/users/sarahibrahim0/events{/privacy}","received_events_url":"https://api.github.com/users/sarahibrahim0/received_events","type":"User","site_admin":false,"name":"Sarah Ibrahim","company":null,"blog":"","location":"Egypt","email":null,"hireable":null,"bio":null,"twitter_username":null,"public_repos":8,"public_gists":0,"followers":1,"following":7,"created_at":"2020-11-29T16:06:54Z","updated_at":"2023-11-12T04:54:00Z","private_gists":0,"total_private_repos":3,"owned_private_repos":3,"disk_usage":121958,"collaborators":0,"two_factor_authentication":false,"plan":{"name":"free","space":976562499,"collaborators":0,"private_repos":10000}}
+[info] 
+[info] +  Success! Logged into GitHub as sarahibrahim0 
 [info] 
