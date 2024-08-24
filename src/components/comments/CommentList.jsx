@@ -3,7 +3,7 @@ import "./CommentList.css";
 import Moment from "react-moment";
 import swal from "sweetalert";
 import UpdateCommentModal from "./UpdateCommentModal";
-import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
+import {  useSelector } from "react-redux/es/hooks/useSelector";
 import { useDispatch } from "react-redux";
 import { deleteComment } from "../../redux/apiCalls/commentApiCalls";
 

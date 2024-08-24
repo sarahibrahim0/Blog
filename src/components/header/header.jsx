@@ -4,7 +4,6 @@ import HeaderLeft from "./HeaderLeft";
 import Navbar from "./Navbar";
 import HeaderRight from "./HeaderRight";
 import HeaderUpper from "./HeaderUpper";
-import Sidenaav from "./sidenav/Sidenaav";
 
 const Header = () => {
   const [toggle, setToggle] = useState(false);

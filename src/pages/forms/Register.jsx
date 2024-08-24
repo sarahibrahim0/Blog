@@ -35,7 +35,7 @@ const Register = () => {
   };
 
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   if(registerMessage) {
 navigate('/email-sent')
