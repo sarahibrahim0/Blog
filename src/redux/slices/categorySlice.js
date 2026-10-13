@@ -1,15 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-import request from "../../utils/reques";
 
 const categorySlice = createSlice({
     name: 'category',
     initialState:{
         categories: [],
-        categoryPosts : []
+        categoryPosts : [],
+        loading: false
     },
     reducers:{
         setCategories(state,actions){
         state.categories = actions.payload;
+        },
+        setLoading(state){
+            state.loading = true;
+        },
+        clearLoading(state){
+            state.loading = false;
         },
         addCategory(state,actions){
             state.categories.push(actions.payload);

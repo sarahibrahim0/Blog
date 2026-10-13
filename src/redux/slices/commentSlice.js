@@ -1,18 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
-import request from "../../utils/reques";
 
 const commentSlice = createSlice({
     name:'comment',
     initialState: {
         comments :[],
-        comment: null
+        comment: null,
+        loading: false
     },
     reducers:{
         setComments(state, action){
         state.comments = action.payload;
         },
+        setLoading(state){
+            state.loading = true;
+        },
+        clearLoading(state){
+            state.loading = false;
+        },
         deleteComment(state, action){
-            state.comments.filter(comment=>comment._id !== action.payload)
+            state.comments = state.comments.filter(comment=>comment._id !== action.payload)
             },
 
 

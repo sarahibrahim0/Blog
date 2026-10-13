@@ -7,6 +7,7 @@ import { postActions } from "../slices/postSlice";
 export function fetchComments(){
     return async (dispatch, getState)=>{
 
+        dispatch(commentActions.setLoading());
         try{
             const {data} = await request.get('/api/comments',{
                 headers:{
@@ -16,6 +17,8 @@ export function fetchComments(){
             dispatch(commentActions.setComments(data));
         }catch(error){
         toast.error(error.response.data.message);
+        } finally {
+            dispatch(commentActions.clearLoading());
         }
 
     }
@@ -32,10 +35,8 @@ export function setComment(newComment){
             });
 
             dispatch(postActions.addCommentToPost(data));
-            console.log('success')
         }catch(error){
         toast.error(error.response.data.message);
-        console.log('error')
         }
 
     }
@@ -58,12 +59,10 @@ export function deleteComment(commentId){
 
             }catch(er){
               toast.error(er.response.data.message)
-            console.log(er)
             }
 
         }catch(error){
             toast.error(error.response.data.message)
-            console.log(error)
 
         }
 

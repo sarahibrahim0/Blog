@@ -2,30 +2,31 @@ import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/header/header";
 import Home from "./pages/home/Home";
-import PostsPages from "./pages/posts-pages/PostsPages";
-import Login from "./pages/forms/Login";
-import Register from "./pages/forms/Register";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import CreatePost from "./pages/create-post/CreatePost";
-import PostDetails from "./pages/post-details/PostDetails";
-import Category from "./pages/category/Category";
-import { ToastContainer, toast } from "react-toastify";
-
-import Profile from "./pages/profile/Profile";
-import UsersTable from "./pages/admin/UsersTable";
-import PostsTable from "./pages/admin/PostsTable";
-import CategoriesTable from "./pages/admin/CategoriesTable";
-import CommentsTable from "./pages/admin/CommentsTable";
-import ForgotPassword from "./pages/forms/ForgotPassword";
-import ResetPassword from "./pages/forms/ResetPassword";
-import NotFound from "./pages/not-found/NotFound";
-import { UseSelector, useSelector } from "react-redux/es/hooks/useSelector";
-import VerifyEmail from "./pages/verify-email/VerifyEmail";
+import { ToastContainer } from "react-toastify";
+import { useSelector } from "react-redux";
+import { lazy, Suspense, useState, useEffect } from "react";
 import Sidenaav from "./components/header/sidenav/Sidenaav";
-import { useState , useEffect} from "react";
 import Footer from "./components/footer/Footer";
-import EmailSent from "./pages/verify-email/EmailSent";
-import PasswordReseted from "./pages/forms/PasswordReseted";
+import PageSkeleton from "./components/skeleton/PageSkeleton";
+
+const PostsPages = lazy(() => import("./pages/posts-pages/PostsPages"));
+const Login = lazy(() => import("./pages/forms/Login"));
+const Register = lazy(() => import("./pages/forms/Register"));
+const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
+const CreatePost = lazy(() => import("./pages/create-post/CreatePost"));
+const PostDetails = lazy(() => import("./pages/post-details/PostDetails"));
+const Category = lazy(() => import("./pages/category/Category"));
+const Profile = lazy(() => import("./pages/profile/Profile"));
+const UsersTable = lazy(() => import("./pages/admin/UsersTable"));
+const PostsTable = lazy(() => import("./pages/admin/PostsTable"));
+const CategoriesTable = lazy(() => import("./pages/admin/CategoriesTable"));
+const CommentsTable = lazy(() => import("./pages/admin/CommentsTable"));
+const ForgotPassword = lazy(() => import("./pages/forms/ForgotPassword"));
+const ResetPassword = lazy(() => import("./pages/forms/ResetPassword"));
+const NotFound = lazy(() => import("./pages/not-found/NotFound"));
+const VerifyEmail = lazy(() => import("./pages/verify-email/VerifyEmail"));
+const EmailSent = lazy(() => import("./pages/verify-email/EmailSent"));
+const PasswordReseted = lazy(() => import("./pages/forms/PasswordReseted"));
 
 function App() {
   const { user } = useSelector((state) => state.auth);
@@ -92,6 +93,7 @@ useEffect(() => {
 
 <div className="bg-white  lg:rounded-3xl h-max min-w-full w-full box-border   ">
 <Header />
+        <Suspense fallback={<PageSkeleton />}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
@@ -160,6 +162,7 @@ useEffect(() => {
 
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </Suspense>
         <Footer/>
 </div>
 

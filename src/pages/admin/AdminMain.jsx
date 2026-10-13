@@ -2,7 +2,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import AddCategoryForm from './AddCategoryForm';
 import './Admin.css';
-import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { fetchCategories } from '../../redux/apiCalls/categoryApiCalls';
 import { getUsersCount } from '../../redux/apiCalls/profileApiCalls';
@@ -25,30 +24,23 @@ const AdminMain = () => {
         dispatch(fetchComments());
     },[])
     return (
-    <div className="w-full ">
+    <div className="admin-main">
+        <header className="admin-overview-header">
+            <span className="admin-overview-eyebrow">Dashboard</span>
+            <h1 className="admin-overview-title">Overview</h1>
+            <p className="admin-overview-sub">
+                A quick summary of your blog activity.
+            </p>
+        </header>
 
-        <div className="w-auto grid 2xl:grid-flow-col xl:grid-flow-col  lg:grid-flow-col 2xl:grid-cols-4 xl:grid-cols-4  lg:grid-cols-4  md:grid-cols-12 sm:grid-cols-12 gap-2 ">
-
-            <div className="2xl:col-span-1 xl:col-span-1 lg:col-span-1 md:col-span-6 sm:col-span-6">
-                <DashboardItem title='Users' number={userCount} link='users-table'/>
-            </div>
-
-            <div className="2xl:col-span-1 xl:col-span-1 lg:col-span-1  md:col-span-6 sm:col-span-6">
-                <DashboardItem title='Posts' number={postsCount} link='posts-table'/>
-            </div>
-
-            <div className="2xl:col-span-1 xl:col-span-1 lg:col-span-1  md:col-span-6 sm:col-span-6">
-                <DashboardItem title='Categories' number={categories.length} link='categories-table'/>
-            </div>
-
-                      <div className="2xl:col-span-1 xl:col-span-1 lg:col-span-1  md:col-span-6 sm:col-span-6">
-                <DashboardItem title='Comments' number={comments.length} link='comments-table'/>
-            </div>
+        <div className="admin-stats-grid">
+            <DashboardItem title='Users' number={userCount} link='users-table' icon='fa-regular fa-user'/>
+            <DashboardItem title='Posts' number={postsCount} link='posts-table' icon='fa-regular fa-newspaper'/>
+            <DashboardItem title='Categories' number={categories.length} link='categories-table' icon='fa-solid fa-list-ul'/>
+            <DashboardItem title='Comments' number={comments.length} link='comments-table' icon='fa-regular fa-comment'/>
         </div>
 
         <AddCategoryForm/>
-
-
     </div>  );
 }
 

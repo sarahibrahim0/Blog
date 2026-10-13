@@ -6,6 +6,7 @@ import { authActions } from "../slices/authSlice";
 
 export function getUserProfile(userId) {
     return async (dispatch) => {
+      dispatch(profileActions.setLoading());
       try {
         const { data } = await request.get(`/api/users/profile/${userId}`);
         //Must write the action in dispatch method
@@ -13,6 +14,8 @@ export function getUserProfile(userId) {
         dispatch(profileActions.setProfilePostsCount(data.posts.length))
       } catch(error){
         toast.error(error.response.data);
+      } finally {
+        dispatch(profileActions.clearLoading());
       }
     };
   }
@@ -22,7 +25,6 @@ export function getUserProfile(userId) {
       try {
         const { data } = await request.get(`/api/users/user/${userId}?pageNumber=${currentPage}`);
         //Must write the action in dispatch method
-        console.log(data + 'dataa')
         dispatch(profileActions.setProfileFilteredPosts(data));
       } catch(error){ toast.error(error.response.data);
       }
@@ -120,12 +122,15 @@ export function getUserProfile(userId) {
 
   export function getUsersProfiles() {
     return async (dispatch, getState) => {
+      dispatch(profileActions.setLoading());
       try {
         const { data } = await request.get(`/api/users/profile`,{
           headers:{Authorization:"Bearer "+ getState().auth.user.token}});
         //Must write the action in dispatch method
         dispatch(profileActions.setProfiles(data));
       } catch(error){ toast.error(error.response.data);
+      } finally {
+        dispatch(profileActions.clearLoading());
       }
     };
   }

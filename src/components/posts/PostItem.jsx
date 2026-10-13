@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import  './Posts.css';
 import { useNavigate } from "react-router-dom";
+import { stripHtml } from "../../utils/stripHtml";
 const PostItem = (props) => {
     const profileLink = props?.userId ? `/profile/${props.userId}`: `/profile/${props.post?.user._id}`;
     const navigate = useNavigate();
@@ -47,7 +48,7 @@ const PostItem = (props) => {
 </div>
 
 <p className="text-sm leading-normal w-full overflow-hidden  h-[96px]  xl:px-5">
-    <span className="inline-block h-full w-full  text-pretty break-words ">{props.post?.description}</span>
+    <span className="inline-block h-full w-full  text-pretty break-words ">{stripHtml(props.post?.description)}</span>
 </p>
 
 <Link className=  "hover:text-white min-h-[41.6px] box-border  hover:bg-[#4776E6] transition-all duration-500 ease-in-out  border-[1px] rounded-full py-2 px-7 mr-2"to={`/posts/details/${props.post?._id}`} >

@@ -4,14 +4,15 @@ import {toast} from 'react-toastify';
 
 export function fetchCategories() {
     return async (dispatch)=> {
+dispatch(categoryActions.setLoading());
 try{
     const {data} = await request.get('/api/categories');
-    console.log(data)
     dispatch(categoryActions.setCategories(data));
 
 }catch (error) {
     toast.error(error.response.data?.message);
-    console.log(error)
+  } finally {
+    dispatch(categoryActions.clearLoading());
   }
     }
 }
@@ -20,12 +21,14 @@ try{
 
 export function fetchCategoryPosts(category, currentPage) {
     return async (dispatch) => {
+      dispatch(categoryActions.setLoading());
       try {
         const { data } = await request.get(`/api/categories/category/${category}?pageNumber=${currentPage}`);
         //Must write the action in dispatch method
-        console.log(data + 'dataa')
         dispatch(categoryActions.setCategoryPosts(data));
       } catch(error){ toast.error(error.response.data);
+      } finally {
+        dispatch(categoryActions.clearLoading());
       }
     };
   }
@@ -37,13 +40,11 @@ try{
         headers: {Authorization: 'Bearer '+getState().auth.user.token,
             'Content-Type': 'application/json'}
     });
-    console.log(data)
     dispatch(categoryActions.addCategory(data));
     toast.success("Category Added Successfully")
 
 }catch (error) {
     toast.error(error.response.data?.message);
-    console.log(error)
   }
     }
 }
@@ -59,7 +60,6 @@ try{
 
 }catch (error) {
     toast.error(error.response.data?.message);
-    console.log(error)
   }
     }
 }

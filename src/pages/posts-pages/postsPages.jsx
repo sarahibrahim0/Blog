@@ -6,6 +6,7 @@ import { getPostsCount , fetchPosts } from "../../redux/apiCalls/postApiCalls";
 import './PostsPages.css'
 import PostItem from './../../components/posts/PostItem';
 import myImage from '../../images/9264822.jpg'
+import PostCardSkeleton from '../../components/skeleton/PostCardSkeleton';
 
 
 const POST_PER_PAGE = 6;
@@ -13,7 +14,7 @@ const POST_PER_PAGE = 6;
 const PostsPages = () => {
 
   const dispatch = useDispatch();
-  const { postsCount, posts } = useSelector(state => state.post);
+  const { postsCount, posts, loading } = useSelector(state => state.post);
 
   const [currentPage, setCurrentPage] = useState(1);
   const pages = Math.ceil(postsCount / POST_PER_PAGE);
@@ -30,7 +31,11 @@ const PostsPages = () => {
   return (
       <section className="box-border w-full h-auto  min-h-auto mt-10  px-5   flex flex-col items-center  justify-between" >
 <div className=" h-auto box-border w-full min-h-full justify-center  grid gap-7 2xl:grid-cols-3 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 ">
-{posts.length>0 ? (
+ {loading && posts.length === 0 ? (
+Array.from({length:6}).map((_,index)=>
+<PostCardSkeleton key={index}/>
+)
+) : posts.length>0 ? (
 posts.map((post,index)=>
 <PostItem key={index} post={post}/>
 )

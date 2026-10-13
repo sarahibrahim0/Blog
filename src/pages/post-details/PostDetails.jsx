@@ -19,6 +19,7 @@ import UpdatePostModal from "./UpdatePostModal";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Formik, Field, ErrorMessage, useFormik } from "formik";
 import { FacebookShareButton, TwitterShareButton } from 'react-share';
+import DOMPurify from "dompurify";
 
 import {
   DeletePost,
@@ -40,9 +41,12 @@ const PostDetails = () => {
 
   const [likes, showLikes] = useState(false);
 
-  const [miniList, showMiniList] = useState(false);
-
   const [share, shareList] = useState(false);
+
+  const isLiked =
+    user && post
+      ? post.likes.some((likedUser) => likedUser._id === user._id)
+      : false;
 
 
 useEffect(()=>{
@@ -52,11 +56,11 @@ useEffect(()=>{
 
 
 
-  const showLikesList = ()=>{
-    if (post && post.likes.length >0){
-      showLikes((prev)=>!prev)
+  const showLikesList = () => {
+    if (post && post.likes.length > 0) {
+      showLikes((prev) => !prev);
     }
-  }
+  };
 
 
   const validationSchema = Yup.object().shape({
@@ -258,209 +262,106 @@ useEffect(()=>{
       </div>
 
       <div className="xl:w-[70%] lg:w-[70%] md:w-full sm:w-full  self-center my-5 post-content">
-        <p className=" text-pretty w-full p-6  ">
-          {post?.description}
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor,
-          magna id malesuada placerat, quam metus rutrum nibh, a bibendum nulla
-          augue vel dolor. Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit. Sed auctor, magna id malesuada placerat, quam metus rutrum nibh,
-          a bibendum nulla augue vel dolor. Lorem ipsum dolor sit amet,
-          consectetur adipiscing elit. Sed auctor, magna id malesuada placerat,
-          quam metus rutrum nibh, a bibendum nulla augue vel dolor. Lorem ipsum
-          dolor sit amet, consectetur adipiscing elit. Sed auctor, magna id
-          malesuada placerat, quam metus rutrum nibh, a bibendum nulla augue vel
-          dolor. Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet,
-          consectetur adipiscing elit. Sed auctor, magna id malesuada placerat,
-          quam metus rutrum nibh, a bibendum nulla augue vel dolor. Lorem ipsum
-          dolor sit amet, consectetur adipiscing elit. Sed auctor, magna id
-          malesuada placerat, quam metus rutrum nibh, a bibendum nulla augue vel
-          dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-          auctor, magna id malesuada placerat, quam metus rutrum nibh, a
-          bibendum nulla augue vel dolor. Lorem ipsum dolor sit amet,
-          consectetur adipiscing elit. Sed auctor, magna id malesuada placerat,
-          quam metus rutrum nibh, a bibendum nulla augue vel dolor. Lorem ipsum
-          dolor sit amet, consectetur adipiscing elit. Sed auctor, magna id
-          malesuada placerat, quam metus rutrum nibh, a bibendum nulla augue vel
-          dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-          auctor, magna id malesuada placerat, quam metus rutrum nibh, a
-          bibendum nulla augue vel dolor. Lorem ipsum dolor sit amet,
-          consectetur adipiscing elit. Sed auctor, magna id malesuada placerat,
-          quam metus rutrum nibh, a bibendum nulla augue vel dolor. Lorem ipsum
-          dolor sit amet, consectetur adipiscing elit. Sed auctor, magna id
-          malesuada placerat, quam metus rutrum nibh, a bibendum nulla augue vel
-          dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-          auctor, magna id malesuada placerat, quam metus rutrum nibh, a
-          bibendum nulla augue vel dolor. Lorem ipsum dolor sit amet,
-          consectetur adipiscing elit. Sed auctor, magna id malesuada placerat,
-          quam metus rutrum nibh, a bibendum nulla augue vel dolor. Lorem ipsum
-          dolor sit amet, consectetur adipiscing elit. Sed auctor, magna id
-          malesuada placerat, quam metus rutrum nibh, a bibendum nulla augue vel
-          dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-          auctor, magna id malesuada placerat, quam metus rutrum nibh, a
-          bibendum nulla augue vel dolor. Lorem ipsum dolor sit amet,
-          consectetur adipiscing elit. Sed auctor, magna id malesuada placerat,
-          quam metus rutrum nibh, a bibendum nulla augue vel dolor. Lorem ipsum
-          dolor sit amet, consectetur adipiscing elit. Sed auctor, magna id
-          malesuada placerat, quam metus rutrum nibh, a bibendum nulla augue vel
-          dolor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-          auctor, magna id malesuada placerat, quam metus rutrum nibh, a
-          bibendum nulla augue vel dolor. consectetur adipiscing elit. Sed
-          auctor, magna id malesuada placerat, quam metus rutrum nibh, a
-          bibendum nulla augue vel dolor.
-        </p>
+<div
+          className="post-content w-full p-6"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(post?.description || ""),
+          }}
+        />
 
-        <div className="px-6 flex ">
+        <div className="px-6 mt-2 flex flex-row items-center flex-wrap gap-3">
           {user && (
-            <>
-                        <i
+            <button
+              type="button"
               onClick={() => dispatch(toggleLikePost(post?._id))}
-              className={
-                post?.likes.some(userI => userI._id === user._id)
-                  ? "fa-solid fa-thumbs-up cursor-pointer text-very-blue"
-                  : "fa-regular fa-thumbs-up cursor-pointer text-very-blue"
-              }
-            ></i>
-</>
-
+              className={`flex flex-row items-center gap-2 rounded-full px-5 py-2 border-[1px] text-sm transition-all duration-300 ${
+                isLiked
+                  ? "bg-very-blue text-white border-very-blue"
+                  : "bg-[#f4f7ff] text-very-blue border-[#e7e9f3] hover:border-very-blue"
+              }`}
+            >
+              <i className={isLiked ? "fa-solid fa-thumbs-up" : "fa-regular fa-thumbs-up"}></i>
+              <span className="font-semibold">{post?.likes?.length} likes</span>
+            </button>
           )}
-          <small className="ml-1 text-very-blue cursor-pointer relative"  onMouseEnter={()=>showMiniList(true)} onMouseLeave={()=>showMiniList(false)} onClick={showLikesList}>{post?.likes.length} likes
 
+          {user && post?.likes?.length > 0 && (
+            <button
+              type="button"
+              onClick={showLikesList}
+              className="text-sm text-faint-gray hover:text-very-blue transition-all duration-300"
+            >
+              View likes
+            </button>
+          )}
 
+          <div className="relative ml-auto">
+            <button
+              type="button"
+              onClick={() => shareList((prev) => !prev)}
+              className="flex flex-row items-center gap-2 rounded-full px-5 py-2 border-[1px] text-sm bg-[#f4f7ff] text-very-blue border-[#e7e9f3] hover:border-very-blue transition-all duration-300"
+            >
+              <i className="fa-solid fa-share"></i>
+              <span className="font-semibold">Share</span>
+            </button>
 
-          {
-  (miniList && user) ?
-  <div className="absolute -top-10 z-10 rounded p-3 right-0 bg-[#000000d9] h- auto w-auto flex flex-col space-y-2 text-[#f4f4f4] ">
- {
-  post.likes.map((user, index)=>{
-
-    return(<span key={index} className="text-xs whitespace-nowrap">
-      {
-        user.username? ( <span>{user.username} </span>) : <span> 'User Not Found' </span>
-      }
-
-    </span>)
-  })
- }
-
-</div> : ''
-}
-          </small>
-
-
-          <div className="w-auto relative ml-3 flex flex-row space-x-1 items-center justify-center"
-          onClick={()=>shareList(prev=> !prev)}>
-            <i class="fa-solid fa-share text-very-blue"></i> <small className=" text-very-blue cursor-pointer">share</small>
-
-
-
-            { share && user ? (
-
-<ul className="activeDrop !w-[200px] !top-5 !z-10  !rounded !py-4 !left-0  !h-auto !items-start !space-y-0 ">
-                  <li
-                    className="linkWrapper pointer-events-auto text-start">
-            <FacebookShareButton url={window.location.href} className="whitespace-nowrap w-full text-blue-black text-start">
-            <i class="fa-brands fa-facebook text-very-blue"></i> share to facebook
-          </FacebookShareButton>
-                  </li>
-
-
-                  <li
-                    className="linkWrapper pointer-events-auto ">
-       <TwitterShareButton url={window.location.href} className="whitespace-nowrap w-full text-blue-black text-start">
-       <i class="fa-brands fa-twitter text-very-blue"></i> Share to Twitter
-      </TwitterShareButton>
-                  </li>
-                      {/* <span  className="text-xs whitespace-nowrap">
-
-    <TwitterShareButton url='https://banish.com/blogs/article/8-reasons-why-you-may-relapse-after-accutane'>
-        Share to Twitter
-      </TwitterShareButton>
-
-</span> */}
-
-
-            </ul>
-
-
-
-
-
-
-
-
-):''
-
-
-
-}
-            </div>
-
-
-          {/* <FacebookShareButton url='https://banish.com/blogs/article/8-reasons-why-you-may-relapse-after-accutane'>
-          </FacebookShareButton>
-
-
-
-          */}
-
-
-
-          { likes && user ? (
-
-
-<>
-
-
-<div   className="z-20  fixed top-0 left-0 bg-[rgba(0,0,0,0.7)] w-full min-h-screen flex flex-col items-center justify-center xl:h-[60%] lg:h-[60%] md:h-full sm:h-full ">
-                  <div onClick={()=>showLikes(false)}  className="w-full h-full absolute top-0 left-0 bg-transparent  ">
-                  </div>
-
-                   <div className={likes
-                    ? 'modal !w-[50vh] !min-h-[60vh] md:!h-auto sm:!h-auto sm:!rounded-lg ': 'modalHidden'}>
-
-                  <div className="w-full flex flex-row justify-between items-center border-b-[1px] pb-3 ">
-
-                    <span className="inline-block text-very-blue text-sm">
-                  {    post?.likes.length
-                  } Likes </span>
-                       <i
-                     title="exit form"
-                       className="box-border inline-block fa-solid fa-x text-sm cursor-pointer    text-very-blue"
-                       onClick={() => showLikes(false)}
-                     ></i>
-
-                  </div>
-                  <ul className="flex flex-col justify-between space-y-3 items-start mt-7 min-w-max overflow-auto">
-                    {post.likes.map((user, index) => (
-                       <li key={index} className="flex flex-row items-center space-x-2 ">
-
-<img src={user.profilePhoto?.url} alt="user" className="inline-block rounded-full w-12 h-12  object-cover "  />
-
-                                                <Link to={`/Profile/${user._id}`}>
-                                                {user.username}
-                                                </Link>
-                    </li>
-                    ))}
-
-
-                    </ul>
-
-
-
-                   </div>
-                   </div>
-
-
-</>
-
-
-):''
-
-
-
-}
-
+            {share && user && (
+              <ul className="absolute right-0 top-11 z-10 w-[190px] bg-white rounded-xl py-3 shadow-[0_8px_30px_rgba(49,61,93,0.18)] border-[1px] border-[#e7e9f3] flex flex-col items-start">
+                <li className="w-full px-4 py-2 hover:bg-[#f4f7ff] transition-all duration-200 cursor-pointer">
+                  <FacebookShareButton
+                    url={window.location.href}
+                    className="whitespace-nowrap w-full text-blue-black text-start flex flex-row items-center gap-2"
+                  >
+                    <i className="fa-brands fa-facebook text-very-blue"></i> Share to Facebook
+                  </FacebookShareButton>
+                </li>
+                <li className="w-full px-4 py-2 hover:bg-[#f4f7ff] transition-all duration-200 cursor-pointer">
+                  <TwitterShareButton
+                    url={window.location.href}
+                    className="whitespace-nowrap w-full text-blue-black text-start flex flex-row items-center gap-2"
+                  >
+                    <i className="fa-brands fa-twitter text-very-blue"></i> Share to Twitter
+                  </TwitterShareButton>
+                </li>
+              </ul>
+            )}
+          </div>
         </div>
+
+
+        {likes && user && (
+          <div className="z-20 fixed top-0 left-0 bg-[rgba(0,0,0,0.7)] w-full h-full flex flex-col items-center justify-center">
+            <div
+              onClick={() => showLikes(false)}
+              className="w-full h-full absolute top-0 left-0 bg-transparent"
+            ></div>
+
+            <div className="relative w-[320px] max-w-[90vw] bg-white rounded-2xl shadow-2xl p-6">
+              <div className="w-full flex flex-row justify-between items-center border-b-[1px] border-[#e7e9f3] pb-3">
+                <span className="inline-block text-very-blue text-sm font-semibold">
+                  {post?.likes?.length} Likes
+                </span>
+                <i
+                  title="Exit form"
+                  className="box-border inline-block fa-solid fa-x text-sm cursor-pointer text-very-blue"
+                  onClick={() => showLikes(false)}
+                ></i>
+              </div>
+              <ul className="flex flex-col space-y-3 items-start mt-5 overflow-auto max-h-[50vh]">
+                {post?.likes?.map((likedUser, index) => (
+                  <li key={index} className="flex flex-row items-center space-x-2">
+                    <img
+                      src={likedUser.profilePhoto?.url}
+                      alt="user"
+                      className="inline-block rounded-full w-12 h-12 object-cover"
+                    />
+                    <Link to={`/profile/${likedUser._id}`}>{likedUser.username}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
       </div>
 
 

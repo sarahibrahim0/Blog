@@ -15,11 +15,12 @@ import {
   uploadProfilePhoto,
 } from "../../redux/apiCalls/profileApiCalls";
 import { useNavigate, useParams, Link, Navigate } from "react-router-dom";
-import { Oval } from "react-loader-spinner";
 import { logoutUser } from "../../redux/apiCalls/authApiCall";
 import PostItem from "../../components/posts/PostItem";
 import Pagination from "../../components/pagination/Pagination";
 import { Form, Formik, Field, ErrorMessage } from "formik";
+import ProfileSkeleton from "../../components/skeleton/ProfileSkeleton";
+import { stripHtml } from "../../utils/stripHtml";
 
 const POST_PER_PAGE = 6;
 
@@ -92,23 +93,8 @@ const Profile = () => {
   };
 
 
-  if (loading) {
-    return (
-      <div className="flex flex-row justify-center items-center w-full h-[100vh]">
-        <Oval
-          height={70}
-          width={70}
-          color="#7f5bc4"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={true}
-          ariaLabel="oval-loading"
-          secondaryColor="#60a3e6"
-          strokeWidth={4}
-          strokeWidthSecondary={4}
-        />
-      </div>
-    );
+  if (loading && !profile) {
+    return <ProfileSkeleton />;
   }
 
   return (
@@ -317,7 +303,7 @@ const Profile = () => {
                         setHoverEff(false);
                       }}
                     >
-                      <i class="far fa-edit text-very-blue text-lg"></i>
+                      <i className="far fa-edit text-very-blue text-lg"></i>
                     </a>
                   )}
                 </div>
@@ -397,7 +383,7 @@ const Profile = () => {
                     </div>
                     <p className="text-sm leading-normal w-full overflow-hidden  h-[96px] ">
                       <span className="inline-block break-all h-full text-faint-gray">
-                        {post?.description}
+                        {stripHtml(post?.description)}
                       </span>
                     </p>
 

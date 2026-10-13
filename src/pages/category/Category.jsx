@@ -7,6 +7,8 @@ import { fetchPostsByCategory } from '../../redux/apiCalls/postApiCalls';
 import Pagination from '../../components/pagination/Pagination';
 import { fetchCategories, fetchCategoryPosts } from '../../redux/apiCalls/categoryApiCalls';
 import myImage from '../../images/9264822.jpg'
+import PostCardSkeleton from '../../components/skeleton/PostCardSkeleton';
+import { stripHtml } from '../../utils/stripHtml';
 const POST_PER_PAGE = 6;
 
 const Category = () => {
@@ -14,8 +16,8 @@ const Category = () => {
 
     const {category}= useParams();
     const dispatch = useDispatch();
-    const{postsCategories} = useSelector(state=>state.post);
-    const {categoryPosts} = useSelector(state=>state.category);
+    const{postsCategories, loading: postLoading} = useSelector(state=>state.post);
+    const {categoryPosts, loading: categoryLoading} = useSelector(state=>state.category);
     const [currentPage, setCurrentPage] = useState(1);
 
 
@@ -41,7 +43,13 @@ const Category = () => {
 
     return (
 <>
-{postsCategories.length > 0 ? (
+{(postLoading || categoryLoading) && categoryPosts.length === 0 ? (
+  <div className="box-border w-full my-10 mx-2 grid gap-7 2xl:grid-cols-3 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1">
+    {Array.from({ length: 3 }).map((_, index) => (
+      <PostCardSkeleton key={index} />
+    ))}
+  </div>
+) : postsCategories.length > 0 ? (
   <div className="box-border  h-full relative my-10 mx-2">
 
 
@@ -138,7 +146,7 @@ const Category = () => {
           </div>
       </div>
       <p className="text-sm leading-normal w-full overflow-hidden  h-[96px] ">
-          <span className="inline-block break-all h-full text-faint-gray">{post?.description}</span>
+          <span className="inline-block break-all h-full text-faint-gray">{stripHtml(post?.description)}</span>
       </p>
 
       <Link className=  "hover:text-white min-h-[41.6px] box-border  hover:bg-[#4776E6] transition-all duration-500 ease-in-out  border-[1px] rounded-full py-2 px-7 mr-2"to={`/posts/details/${post?._id}`} >

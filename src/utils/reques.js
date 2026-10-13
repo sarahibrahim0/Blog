@@ -2,8 +2,7 @@ import axios from "axios"
 
 const request = axios.create({
 
-    // baseURL:"https://blog-5g3k.onrender.com",
-    baseURL:"http://localhost:8000/",
+    baseURL: process.env.REACT_APP_API_URL || "http://localhost:8000",
 
    
 })

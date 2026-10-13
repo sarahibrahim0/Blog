@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import {Sidenav, initTE } from 'tw-elements';
 import './Sidenaav.css';
-import {  useSelector } from 'react-redux/es/hooks/useSelector';
+import {  useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { fetchCategories } from '../../../redux/apiCalls/categoryApiCalls';
 import { logoutUser } from '../../../redux/apiCalls/authApiCall';

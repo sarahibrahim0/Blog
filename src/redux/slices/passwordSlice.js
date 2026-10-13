@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import request from "../../utils/reques";
 
 const passwordSlice = createSlice({
   name: "password",

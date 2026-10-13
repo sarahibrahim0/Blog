@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 //fetch posts based on page number
 export function fetchPosts(pageNumber) {
   return async (dispatch) => {
+    dispatch(postActions.setLoading());
     try {
       const { data } = await request.get(`/api/posts?pageNumber=${pageNumber}`);
       //Must write the action in dispatch method
@@ -12,6 +13,8 @@ export function fetchPosts(pageNumber) {
 
     } catch (error) {
       toast.error(error.response.data.message);
+    } finally {
+      dispatch(postActions.clearLoading());
     }
   };
 }
@@ -19,12 +22,14 @@ export function fetchPosts(pageNumber) {
 //fetch posts based on category
 export function fetchPostsByCategory(category) {
   return async (dispatch) => {
+    dispatch(postActions.setLoading());
     try {
       const { data } = await request.get(`/api/posts?category=${category}`);
-      //Must write the action in dispatch method
       dispatch(postActions.setPostsCategories(data));
     } catch (error) {
       toast.error(error.response.data.message);
+    } finally {
+      dispatch(postActions.clearLoading());
     }
   };
 }
@@ -149,12 +154,15 @@ export function deletePost(postId) {
 
 export function fetchAllPosts() {
   return async (dispatch) => {
+    dispatch(postActions.setLoading());
     try {
       const { data } = await request.get(`/api/posts`);
       //Must write the action in dispatch method
       dispatch(postActions.setPosts(data));
     } catch (error) {
       toast.error(error.response.data.message);
+    } finally {
+      dispatch(postActions.clearLoading());
     }
   };
 }

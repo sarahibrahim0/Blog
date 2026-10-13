@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useSelector } from "react-redux";
 const EmailSent = () => {
 
     const { registerMessage } = useSelector(state => state.auth);

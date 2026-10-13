@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import request from "../../utils/reques";
 
 const postSlice = createSlice({
   name: "post",
@@ -38,23 +37,30 @@ const postSlice = createSlice({
       state.post = action.payload;
     },
     setPostLikes(state, action) {
-      state.post.likes = action.payload.likes;
-    },
-    setPostLikes(state, action) {
-      state.post.likes = action.payload.likes;
+      if (state.post) {
+        state.post.likes = action.payload.likes;
+      }
     },
     deletePost(state, action) {
       state.posts = state.posts.filter((post) => post._id !== action.payload);
     },
     addCommentToPost(state, action) {
-      state.post.comments.push(action.payload);
+      if (state.post) {
+        state.post.comments.push(action.payload);
+      }
     },
-    updatePostComment(state,action){
-      state.post.comments = state.post.comments.map(comment=>
-        comment._id === action.payload._id?action.payload :comment )
+    updatePostComment(state, action) {
+      if (state.post) {
+        state.post.comments = state.post.comments.map((comment) =>
+          comment._id === action.payload._id ? action.payload : comment
+        );
+      }
     },
     deletePostComment(state, action) {
-      const comment = state.post.comments?.find(c => c?._id === action.payload);
+      if (!state.post) return;
+      const comment = state.post.comments?.find(
+        (c) => c?._id === action.payload
+      );
       const commentIndex = state.post.comments?.indexOf(comment);
 
       state.post.comments?.splice(commentIndex, 1);

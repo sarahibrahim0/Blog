@@ -1,26 +1,19 @@
-
 import { Link } from "react-router-dom";
-const DashboardItem = (props) => {
-    return (
-        <div className="w-full h-auto  border-[1px] p-3 rounded-lg flex flex-col space-y-2">
-            <div className="flex flex-row justify-start items-end">
-              <span className="text-xs font-semibold text-blue-black">
-              {props.title}
-              </span>
-            </div>
-            <div className="flex flex-row justify-between items-end">
-                <h2 className="font-semibold text-very-blue">{props.number}</h2>
-                <div>
-                <Link to={`/admin-dashboard/${props.link}`} className="hover:text-very-blue transition-all duration-500 ease-in-out">
-                    <span className="text-xs text-blue-black hover:text-very-blue">
-                    View More
-                    </span>
-                    </Link>
-                </div>
+import "./DashboardItem.css";
 
-            </div>
-        </div>
-     );
-}
+const DashboardItem = ({ title, number, link, icon }) => {
+  return (
+    <Link to={`/admin-dashboard/${link}`} className="admin-stat">
+      <span className="admin-stat-icon">
+        <i className={icon}></i>
+      </span>
+      <span className="admin-stat-title">{title}</span>
+      <span className="admin-stat-number">{number ?? 0}</span>
+      <span className="admin-stat-link">
+        View more <i className="bi bi-arrow-right"></i>
+      </span>
+    </Link>
+  );
+};
 
 export default DashboardItem;
