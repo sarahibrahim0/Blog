@@ -18,6 +18,8 @@ const ResetPassword = () => {
   const { userId, token } = useParams();
 
   const navigate = useNavigate();
+
+  
   useEffect(() => {
     console.log(isError)
     dispatch(getResetPassword(userId, token));
