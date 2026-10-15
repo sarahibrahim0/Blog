@@ -1,4 +1,5 @@
 import request from "../../utils/reques";
+import getErrMsg from "../../utils/errorMsg";
 import { profileActions } from "../slices/profileSlice";
 import {toast} from 'react-toastify';
 import { authActions } from "../slices/authSlice";
@@ -13,7 +14,7 @@ export function getUserProfile(userId) {
         dispatch(profileActions.setProfile(data));
         dispatch(profileActions.setProfilePostsCount(data.posts.length))
       } catch(error){
-        toast.error(error.response.data);
+        toast.error(getErrMsg(error));
       } finally {
         dispatch(profileActions.clearLoading());
       }
@@ -26,7 +27,7 @@ export function getUserProfile(userId) {
         const { data } = await request.get(`/api/users/user/${userId}?pageNumber=${currentPage}`);
         //Must write the action in dispatch method
         dispatch(profileActions.setProfileFilteredPosts(data));
-      } catch(error){ toast.error(error.response.data);
+      } catch(error){ toast.error(getErrMsg(error));
       }
     };
   }
@@ -35,7 +36,7 @@ export function getUserProfile(userId) {
       try {
         const { data } = await request.get(`/api/users/profile/64fe389e629a527b361cfff3`);
         dispatch(profileActions.setAdminProfile(data));
-      } catch(error){ toast.error(error.response.data);
+      } catch(error){ toast.error(getErrMsg(error));
       }
     };
   }
@@ -58,7 +59,7 @@ export function getUserProfile(userId) {
         user.profilePhoto = data?.profilePhoto;
         localStorage.setItem('userInfo',JSON.stringify(user));
 
-      } catch(error){ toast.error(error.response.data);
+      } catch(error){ toast.error(getErrMsg(error));
       }
     };
   }
@@ -80,7 +81,7 @@ export function getUserProfile(userId) {
         user.username= data.username;
         localStorage.setItem('userInfo',JSON.stringify(user));
 
-      } catch(error){ toast.error(error.response.data);
+      } catch(error){ toast.error(getErrMsg(error));
       }
     };
   }
@@ -100,7 +101,7 @@ export function getUserProfile(userId) {
         },2000)
       }
       catch(error){
-        toast.error(error.response.data.message)
+        toast.error(getErrMsg(error))
       }
     }
   }
@@ -114,13 +115,30 @@ export function getUserProfile(userId) {
           headers:{Authorization:"Bearer "+ getState().auth.user.token}});
         //Must write the action in dispatch method
         dispatch(profileActions.setUserCount(data?.userCount));
-      } catch(error){ toast.error(error.response.data);
+      } catch(error){ toast.error(getErrMsg(error));
       }
     };
   }
 
 
-  export function getUsersProfiles() {
+  export function toggleUserActive(userId) {
+  return async (dispatch, getState) => {
+    try {
+      const { data } = await request.put(`/api/users/active/${userId}`, {}, {
+        headers: { Authorization: "Bearer " + getState().auth.user.token },
+      });
+      dispatch(profileActions.toggleUserActive(data));
+      toast.success(
+        data?.isActive === false ? "User deactivated" : "User activated"
+      );
+    } catch (error) {
+      toast.error(getErrMsg(error));
+    }
+  };
+}
+
+
+export function getUsersProfiles() {
     return async (dispatch, getState) => {
       dispatch(profileActions.setLoading());
       try {
@@ -128,7 +146,7 @@ export function getUserProfile(userId) {
           headers:{Authorization:"Bearer "+ getState().auth.user.token}});
         //Must write the action in dispatch method
         dispatch(profileActions.setProfiles(data));
-      } catch(error){ toast.error(error.response.data);
+      } catch(error){ toast.error(getErrMsg(error));
       } finally {
         dispatch(profileActions.clearLoading());
       }

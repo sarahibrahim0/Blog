@@ -1,4 +1,5 @@
 import request from "../../utils/reques";
+import getErrMsg from "../../utils/errorMsg";
 import {toast} from 'react-toastify';
 import { commentActions } from "../slices/commentSlice";
 import { postActions } from "../slices/postSlice";
@@ -16,7 +17,7 @@ export function fetchComments(){
             });
             dispatch(commentActions.setComments(data));
         }catch(error){
-        toast.error(error.response.data.message);
+        toast.error(getErrMsg(error));
         } finally {
             dispatch(commentActions.clearLoading());
         }
@@ -36,7 +37,7 @@ export function setComment(newComment){
 
             dispatch(postActions.addCommentToPost(data));
         }catch(error){
-        toast.error(error.response.data.message);
+        toast.error(getErrMsg(error));
         }
 
     }
@@ -58,11 +59,11 @@ export function deleteComment(commentId){
                 toast.success(res.data?.message);
 
             }catch(er){
-              toast.error(er.response.data.message)
+              toast.error(getErrMsg(er))
             }
 
         }catch(error){
-            toast.error(error.response.data.message)
+            toast.error(getErrMsg(error))
 
         }
 
@@ -82,7 +83,7 @@ export function updateComment(commentId, newComment){
             toast.success(data.message);
 
         }catch(error){
-        toast.error(error.response.data.message);
+        toast.error(getErrMsg(error));
         }
 
     }

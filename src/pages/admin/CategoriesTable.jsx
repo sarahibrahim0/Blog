@@ -5,7 +5,8 @@ import AdminTableLayout from "./AdminTableLayout";
 import DataTable from "../../components/table/DataTable";
 import {
   deleteCategory,
-  fetchCategories,
+  fetchAllCategories,
+  toggleCategoryActive,
 } from "../../redux/apiCalls/categoryApiCalls";
 
 const CategoriesTable = () => {
@@ -13,7 +14,7 @@ const CategoriesTable = () => {
   const { categories, loading } = useSelector((state) => state.category);
 
   useEffect(() => {
-    dispatch(fetchCategories());
+    dispatch(fetchAllCategories());
   }, []);
 
   const deleteCategoryHandler = (categoryId) => {
@@ -43,6 +44,22 @@ const CategoriesTable = () => {
       key: "title",
       header: "Title",
       render: (category) => <b>{category?.title}</b>,
+    },
+    {
+      key: "status",
+      header: "Status",
+      render: (category) => (
+        <button
+          onClick={() => dispatch(toggleCategoryActive(category?._id))}
+          className={`data-table-btn ${
+            category?.isActive === false
+              ? "data-table-btn--muted"
+              : "data-table-btn--active"
+          }`}
+        >
+          {category?.isActive === false ? "Inactive" : "Active"}
+        </button>
+      ),
     },
     {
       key: "action",

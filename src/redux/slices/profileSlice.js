@@ -56,6 +56,14 @@ state.userCount = action.payload;
 },
 setProfiles(state,action){
     state.profiles=action.payload;
+},
+toggleUserActive(state,action){
+    const updated = action.payload;
+    state.profiles = state.profiles.map(profile =>
+        profile._id === updated._id
+            ? { ...profile, isActive: updated.isActive }
+            : profile
+    );
 }
     }
 });

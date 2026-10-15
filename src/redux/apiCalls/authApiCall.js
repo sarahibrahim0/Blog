@@ -1,5 +1,6 @@
 import { authActions } from "../slices/authSlice";
 import request from "../../utils/reques";
+import getErrMsg from "../../utils/errorMsg";
 import { toast } from "react-toastify";
 //login user
 //Must return anonymous function
@@ -12,7 +13,7 @@ export function loginUser(user) {
       dispatch(authActions.login(data));
       localStorage.setItem("userInfo", JSON.stringify(data));
     } catch(error){
-      toast.error(error.response.data);
+      toast.error(getErrMsg(error));
    }
   };
 }
@@ -32,7 +33,7 @@ export function logoutUser() {
         //Must write the action in dispatch method
         dispatch(authActions.register(data.message));
       } catch(error){
-        toast.error(error.response.data);
+        toast.error(getErrMsg(error));
              }
     };
   }
@@ -49,7 +50,7 @@ export function logoutUser() {
         dispatch(authActions.clearIsVerifying());
 
       } catch(error){
-        toast.error(error.response.data);
+        toast.error(getErrMsg(error));
 
 
       }

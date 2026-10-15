@@ -23,6 +23,14 @@ const categorySlice = createSlice({
             deleteCategory(state,action){
              state.categories=   state.categories.filter(category=> category._id !== action.payload)
             },
+            toggleCategoryActive(state,action){
+                const updated = action.payload;
+                state.categories = state.categories.map(category =>
+                    category._id === updated._id
+                        ? { ...category, isActive: updated.isActive }
+                        : category
+                );
+            },
             setCategoryPosts(state,action){
                 state.categoryPosts = action.payload;
             },

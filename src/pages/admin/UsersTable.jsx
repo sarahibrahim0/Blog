@@ -7,6 +7,7 @@ import DataTable from "../../components/table/DataTable";
 import {
   deleteProfile,
   getUsersProfiles,
+  toggleUserActive,
 } from "../../redux/apiCalls/profileApiCalls";
 
 const UsersTable = () => {
@@ -52,6 +53,22 @@ const UsersTable = () => {
       key: "email",
       header: "Email",
       render: (profile) => profile?.email,
+    },
+    {
+      key: "status",
+      header: "Status",
+      render: (profile) => (
+        <button
+          onClick={() => dispatch(toggleUserActive(profile?._id))}
+          className={`data-table-btn ${
+            profile?.isActive === false
+              ? "data-table-btn--muted"
+              : "data-table-btn--active"
+          }`}
+        >
+          {profile?.isActive === false ? "Inactive" : "Active"}
+        </button>
+      ),
     },
     {
       key: "action",

@@ -44,6 +44,15 @@ const postSlice = createSlice({
     deletePost(state, action) {
       state.posts = state.posts.filter((post) => post._id !== action.payload);
     },
+    togglePostActive(state, action) {
+      const updated = action.payload;
+      state.posts = state.posts.map((post) =>
+        post._id === updated._id ? { ...post, isActive: updated.isActive } : post
+      );
+      if (state.post && state.post._id === updated._id) {
+        state.post.isActive = updated.isActive;
+      }
+    },
     addCommentToPost(state, action) {
       if (state.post) {
         state.post.comments.push(action.payload);

@@ -1,4 +1,5 @@
 import request from "../../utils/reques";
+import getErrMsg from "../../utils/errorMsg";
 import { categoryActions } from "../slices/categorySlice";
 import {toast} from 'react-toastify';
 
@@ -10,7 +11,7 @@ try{
     dispatch(categoryActions.setCategories(data));
 
 }catch (error) {
-    toast.error(error.response.data?.message);
+    toast.error(getErrMsg(error));
   } finally {
     dispatch(categoryActions.clearLoading());
   }
@@ -19,6 +20,38 @@ try{
 
 
 
+export function fetchAllCategories() {
+    return async (dispatch, getState)=> {
+dispatch(categoryActions.setLoading());
+try{
+    const {data} = await request.get('/api/categories/admin',{
+        headers: {Authorization: 'Bearer '+getState().auth.user.token}
+    });
+    dispatch(categoryActions.setCategories(data));
+
+}catch (error) {
+    toast.error(getErrMsg(error));
+  } finally {
+    dispatch(categoryActions.clearLoading());
+  }
+    }
+}
+
+export function toggleCategoryActive(id) {
+    return async (dispatch, getState)=> {
+try{
+    const {data} = await request.put(`/api/categories/active/${id}`,{},{
+        headers: {Authorization: 'Bearer '+getState().auth.user.token}
+    });
+    dispatch(categoryActions.toggleCategoryActive(data));
+    toast.success(data?.isActive === false ? "Category deactivated" : "Category activated")
+
+}catch (error) {
+    toast.error(getErrMsg(error));
+  }
+    }
+}
+
 export function fetchCategoryPosts(category, currentPage) {
     return async (dispatch) => {
       dispatch(categoryActions.setLoading());
@@ -26,7 +59,7 @@ export function fetchCategoryPosts(category, currentPage) {
         const { data } = await request.get(`/api/categories/category/${category}?pageNumber=${currentPage}`);
         //Must write the action in dispatch method
         dispatch(categoryActions.setCategoryPosts(data));
-      } catch(error){ toast.error(error.response.data);
+      } catch(error){ toast.error(getErrMsg(error));
       } finally {
         dispatch(categoryActions.clearLoading());
       }
@@ -44,7 +77,7 @@ try{
     toast.success("Category Added Successfully")
 
 }catch (error) {
-    toast.error(error.response.data?.message);
+    toast.error(getErrMsg(error));
   }
     }
 }
@@ -59,7 +92,7 @@ try{
     toast.success(data?.message)
 
 }catch (error) {
-    toast.error(error.response.data?.message);
+    toast.error(getErrMsg(error));
   }
     }
 }

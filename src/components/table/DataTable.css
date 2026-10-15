@@ -161,6 +161,28 @@
   background: #ffe3e8;
 }
 
+.data-table-btn--active {
+  background-image: none;
+  background: #e6f7ee;
+  color: #1f9d63;
+}
+
+.data-table-btn--active:hover {
+  box-shadow: 0 12px 24px rgba(31, 157, 99, 0.25);
+  background: #d5f2e3;
+}
+
+.data-table-btn--muted {
+  background-image: none;
+  background: #eef0f8;
+  color: #8a94ac;
+}
+
+.data-table-btn--muted:hover {
+  box-shadow: 0 12px 24px rgba(138, 148, 172, 0.25);
+  background: #e3e6f2;
+}
+
 .data-table-empty {
   display: flex;
   flex-direction: column;

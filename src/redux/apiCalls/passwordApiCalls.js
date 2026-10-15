@@ -1,5 +1,6 @@
 import {passwordActions} from '../slices/passwordSlice'
 import request from "../../utils/reques";
+import getErrMsg from "../../utils/errorMsg";
 import { toast } from "react-toastify";
 
 //forgot password
@@ -12,7 +13,7 @@ export function forgotPassword(userEmail) {
       dispatch(passwordActions.clearError());
       toast.success(data.message);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(getErrMsg(error));
     }
   };
 }
@@ -39,7 +40,7 @@ export function resetPassword(newPassword, user) {
       );
       toast.success(data.data.message)
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(getErrMsg(error));
     }
   };
 }

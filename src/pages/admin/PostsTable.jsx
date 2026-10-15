@@ -4,7 +4,11 @@ import swal from "sweetalert";
 import { useSelector, useDispatch } from "react-redux";
 import AdminTableLayout from "./AdminTableLayout";
 import DataTable from "../../components/table/DataTable";
-import { deletePost, fetchAllPosts } from "../../redux/apiCalls/postApiCalls";
+import {
+  deletePost,
+  fetchAllPosts,
+  togglePostActive,
+} from "../../redux/apiCalls/postApiCalls";
 
 const PostsTable = () => {
   const { posts, loading } = useSelector((state) => state.post);
@@ -48,6 +52,22 @@ const PostsTable = () => {
       header: "Post Title",
       render: (post) => (
         <span className="data-table-truncate">{post?.title}</span>
+      ),
+    },
+    {
+      key: "status",
+      header: "Status",
+      render: (post) => (
+        <button
+          onClick={() => dispatch(togglePostActive(post?._id))}
+          className={`data-table-btn ${
+            post?.isActive === false
+              ? "data-table-btn--muted"
+              : "data-table-btn--active"
+          }`}
+        >
+          {post?.isActive === false ? "Inactive" : "Active"}
+        </button>
       ),
     },
     {

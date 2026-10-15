@@ -1,4 +1,5 @@
 import request from "../../utils/reques";
+import getErrMsg from "../../utils/errorMsg";
 import { postActions } from "../slices/postSlice";
 import { toast } from "react-toastify";
 
@@ -12,7 +13,7 @@ export function fetchPosts(pageNumber) {
       dispatch(postActions.setPosts(data));
 
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(getErrMsg(error));
     } finally {
       dispatch(postActions.clearLoading());
     }
@@ -27,7 +28,7 @@ export function fetchPostsByCategory(category) {
       const { data } = await request.get(`/api/posts?category=${category}`);
       dispatch(postActions.setPostsCategories(data));
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(getErrMsg(error));
     } finally {
       dispatch(postActions.clearLoading());
     }
@@ -41,7 +42,7 @@ export function getPostsCount() {
       //Must write the action in dispatch method
       dispatch(postActions.setPostsCount(data));
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(getErrMsg(error));
     }
   };
 }
@@ -67,7 +68,7 @@ export function createPost(newPost) {
       setTimeout(() => dispatch(postActions.clearIsPostCreated()), 2000);
     } catch (error) {
 
-      toast.error(error.response.data.message);
+      toast.error(getErrMsg(error));
       dispatch(postActions.clearLoading());
     }
   };
@@ -80,7 +81,7 @@ export function fetchPostById(postId) {
       //Must write the action in dispatch method
       dispatch(postActions.setPost(data));
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(getErrMsg(error));
     }
   };
 }
@@ -98,7 +99,7 @@ export function toggleLikePost(postId) {
       //Must write the action in dispatch method
       dispatch(postActions.setPostLikes(data));
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(getErrMsg(error));
     }
   };
 }
@@ -115,7 +116,7 @@ export function updatePostImage(newImage, postId) {
       toast.success("New Post Image Uploaded Successfully");
       //Must write the action in dispatch method
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(getErrMsg(error));
     }
   };
 }
@@ -130,7 +131,7 @@ export function updatePost(newPost, postId) {
       toast.success("Post Updated Successfully");
       //Must write the action in dispatch method
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(getErrMsg(error));
     }
   };
 }
@@ -146,23 +147,45 @@ export function deletePost(postId) {
       dispatch(postActions.deletePost(data?.postId));
       toast.success(data?.message);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(getErrMsg(error));
     }
   };
 }
 
 
 export function fetchAllPosts() {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     dispatch(postActions.setLoading());
     try {
-      const { data } = await request.get(`/api/posts`);
+      const { data } = await request.get(`/api/posts/admin`, {
+        headers: { Authorization: "Bearer " + getState().auth.user.token },
+      });
       //Must write the action in dispatch method
       dispatch(postActions.setPosts(data));
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(getErrMsg(error));
     } finally {
       dispatch(postActions.clearLoading());
+    }
+  };
+}
+
+export function togglePostActive(postId) {
+  return async (dispatch, getState) => {
+    try {
+      const { data } = await request.put(
+        `/api/posts/active/${postId}`,
+        {},
+        {
+          headers: { Authorization: "Bearer " + getState().auth.user.token },
+        }
+      );
+      dispatch(postActions.togglePostActive(data));
+      toast.success(
+        data?.isActive === false ? "Post deactivated" : "Post activated"
+      );
+    } catch (error) {
+      toast.error(getErrMsg(error));
     }
   };
 }

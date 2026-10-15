@@ -22,7 +22,6 @@ import { FacebookShareButton, TwitterShareButton } from 'react-share';
 import DOMPurify from "dompurify";
 
 import {
-  DeletePost,
   deletePost,
   fetchPostById,
   toggleLikePost,
@@ -276,8 +275,8 @@ useEffect(()=>{
               onClick={() => dispatch(toggleLikePost(post?._id))}
               className={`flex flex-row items-center gap-2 rounded-full px-5 py-2 border-[1px] text-sm transition-all duration-300 ${
                 isLiked
-                  ? "bg-very-blue text-white border-very-blue"
-                  : "bg-[#f4f7ff] text-very-blue border-[#e7e9f3] hover:border-very-blue"
+                  ? "!bg-very-blue text-white border-very-blue"
+                  : "!bg-[#f4f7ff] text-very-blue border-[#e7e9f3] hover:border-very-blue"
               }`}
             >
               <i className={isLiked ? "fa-solid fa-thumbs-up" : "fa-regular fa-thumbs-up"}></i>
@@ -299,7 +298,7 @@ useEffect(()=>{
             <button
               type="button"
               onClick={() => shareList((prev) => !prev)}
-              className="flex flex-row items-center gap-2 rounded-full px-5 py-2 border-[1px] text-sm bg-[#f4f7ff] text-very-blue border-[#e7e9f3] hover:border-very-blue transition-all duration-300"
+              className="flex flex-row items-center gap-2 rounded-full px-5 py-2 border-[1px] text-sm !bg-[#f4f7ff] text-very-blue border-[#e7e9f3] hover:border-very-blue transition-all duration-300"
             >
               <i className="fa-solid fa-share"></i>
               <span className="font-semibold">Share</span>

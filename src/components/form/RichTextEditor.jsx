@@ -154,6 +154,7 @@ const RichTextEditor = ({
   error,
 }) => {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
       StarterKit,
       Placeholder.configure({ placeholder }),
@@ -170,7 +171,14 @@ const RichTextEditor = ({
   });
 
   useEffect(() => {
-    if (editor && value !== editor.getHTML()) {
+    if (!editor || editor.isDestroyed) return;
+    let current = "";
+    try {
+      current = editor.getHTML();
+    } catch (e) {
+      return;
+    }
+    if (value !== current) {
       editor.commands.setContent(value || "", { emitUpdate: false });
     }
   }, [value, editor]);
