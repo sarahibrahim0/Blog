@@ -210,6 +210,12 @@
   color: #4776e6;
   background-color:#f1f4f7;
 }
+.dropdownSkeletonItem {
+  width: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
 .headerRightNavLink {
   color: #5b6b80;
   width: 100%;

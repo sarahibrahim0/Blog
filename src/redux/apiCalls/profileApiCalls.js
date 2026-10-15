@@ -12,7 +12,11 @@ export function getUserProfile(userId) {
         const { data } = await request.get(`/api/users/profile/${userId}`);
         //Must write the action in dispatch method
         dispatch(profileActions.setProfile(data));
-        dispatch(profileActions.setProfilePostsCount(data.posts.length))
+        dispatch(
+          profileActions.setProfilePostsCount(
+            data.posts.filter((p) => p?.isActive !== false).length
+          )
+        )
       } catch(error){
         toast.error(getErrMsg(error));
       } finally {

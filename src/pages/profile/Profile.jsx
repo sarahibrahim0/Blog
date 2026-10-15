@@ -14,7 +14,7 @@ import {
   getUserProfile,
   uploadProfilePhoto,
 } from "../../redux/apiCalls/profileApiCalls";
-import { useNavigate, useParams, Link, Navigate } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { logoutUser } from "../../redux/apiCalls/authApiCall";
 import PostItem from "../../components/posts/PostItem";
 import Pagination from "../../components/pagination/Pagination";
@@ -69,16 +69,14 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    if (user !== null) {
-      dispatch(getUserProfile(id));
-    }
+    dispatch(getUserProfile(id));
     window.scrollTo(0, 0);
-  }, [user]);
+  }, [id]);
 
   useEffect(() => {
     dispatch(getUserPosts(id, currentPage));
     window.scrollTo(0, 0);
-  }, [currentPage]);
+  }, [id, currentPage]);
 
   useEffect(() => {
     if (isProfileDeleted) {
@@ -99,8 +97,7 @@ const Profile = () => {
 
   return (
     <>
-      {user ? (
-        <div className="box-border w-auto h-auto mt-10 mx-2 my-10 relative">
+      <div className="box-border w-auto h-auto mt-10 mx-2 my-10 relative">
           <section className="box-border w-auto rounded-xl 2xl:gap-2 xl:gap-2 lg:gap-2 grid 2xl:grid-flow-col xl:grid-flow-col lg:grid-flow-col  grid-cols-12 border-[1px] min-h-max mb-10  p-12  ">
             <div className=" box-border w-auto flex 2xl:col-span-2 xl:col-span-3 lg:col-span-4 md:col-span-12 sm:col-span-12 flex-row  xl:justify-start lg:justify-start md:justify-center sm:justify-center items-center xl:h-[190px] lg:h-[190px]">
               <div className=" relative">
@@ -285,12 +282,12 @@ const Profile = () => {
                   <div className="self-center text-center  box-border flex flex-row items-center justify-between space-x-1 rounded-full bg-[#3234400a] w-auto px-5 py-2 xl:mt-0 lg:mt-0  ">
                     <span className="text-xs block">
                       {" "}
-                      {profile?.posts?.length}
+                      {profile?.posts?.filter((p) => p?.isActive !== false).length}
                     </span>
                     <span className="text-xs block">Articles</span>
                   </div>
 
-                  {user._id === profile?._id && (
+                  {user?._id === profile?._id && (
                     <a
                       className={hoverEff ? "smIcon00" : ""}
                       data-title="edit profile"
@@ -438,9 +435,6 @@ const Profile = () => {
             />
           ) : null}
         </div>
-      ) : (
-        <Navigate to={"/"} />
-      )}
     </>
   );
 };

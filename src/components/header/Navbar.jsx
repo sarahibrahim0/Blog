@@ -3,11 +3,12 @@ import { useState, useEffect } from "react";
 import {  useSelector , useDispatch} from "react-redux";
 import { fetchCategories } from "../../redux/apiCalls/categoryApiCalls";
 import { useNavigate } from "react-router-dom";
+import Skeleton from "../skeleton/Skeleton";
 
 
 const Navbar = ({ toggle, setToggle }) => {
   const { user } = useSelector((state) => state.auth);
-  const  {categories} = useSelector((state) => state.category);
+  const  {categories, loading} = useSelector((state) => state.category);
 
   const [dropdown, setDropdown] = useState(false);
   const dispatch = useDispatch();
@@ -38,7 +39,13 @@ const Navbar = ({ toggle, setToggle }) => {
 
 Categories
           <ul className={!dropdown ? "dropdown mt-1" : "activedrop mt-1"} >
-              {categories?.map((item, index) => {
+              {loading && !categories?.length
+                ? Array.from({ length: 5 }).map((_, index) => (
+                    <div key={`skeleton-${index}`} className="dropdownSkeletonItem">
+                      <Skeleton variant="text" width="70%" height={14} />
+                    </div>
+                  ))
+                : categories?.map((item, index) => {
                 return (
                   <Link
                   key={index}

@@ -8,12 +8,13 @@ import {  useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { fetchCategories } from '../../../redux/apiCalls/categoryApiCalls';
 import { logoutUser } from '../../../redux/apiCalls/authApiCall';
+import Skeleton from '../../skeleton/Skeleton';
 
 
   const Sidenaav = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const {categories} = useSelector((state)=>state.category);
+    const {categories, loading} = useSelector((state)=>state.category);
     const {user} = useSelector((state)=>state.auth);
 
 
@@ -74,7 +75,15 @@ useEffect(()=>{
         data-te-sidenav-collapse-ref
         >
 {
-categories?.map((category,index)=>{
+loading && !categories?.length
+  ? Array.from({ length: 5 }).map((_, index) => (
+      <li key={`skeleton-${index}`} className="relative w-full">
+        <div className="sidenavSkeletonItem">
+          <Skeleton variant="text" width="60%" height={12} />
+        </div>
+      </li>
+    ))
+  : categories?.map((category,index)=>{
   return ( <li key={index} className="relative w-full">
   <Link
     to={`posts/categories/${category.title}`}
